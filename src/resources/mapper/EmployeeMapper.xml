@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.amateur.occupation.mapper.EmployeeMapper">
+
+    <!-- general result map -->
+    <resultMap id="BaseResultMap" type="com.amateur.occupation.entity.Employee">
+        <id column="email" property="email"/>
+        <!--<result column="password" property="password"/>-->
+        <!--<result column="user_type" property="userType" />-->
+        <result column="name" property="name"/>
+        <result column="birthday" property="birthday" />
+        <result column="edu_background" property="eduBackground"/>
+        <result column="work_experience" property="workExperience" />
+        <result column="expect_salary" property="expectSalary"/>
+        <result column="address" property="address" />
+        <result column="description" property="description" />
+    </resultMap>
+
+
+
+
+</mapper>
