@@ -1,0 +1,17 @@
+#drop_box {
+	background-color: gray;
+	outline: 2px dashed black;
+	outline-offset: -10px;
+	width: 300px;
+	height: 200px;
+	padding: 8px;
+	font-size: 16px;
+}
+#filetoupload {
+	display: none;
+}
+
+#pbarcase{ width:300px; height:16px; background:#000; border:#000 1px solid; }
+#pbarcase > #pbar{ position: relative; top:0px; background: #06C; width:0%; height:16px; color: #0FF; text-align:center; }
+#pbarcase > #pbart{ position: relative; top:-19px; text-align:center; color:#FFF; padding: 4px; height:8px; font-size:12px; }
+

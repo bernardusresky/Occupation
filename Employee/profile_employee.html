@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="dropdown.css">
+<script src="dropdown.js"></script>
+</head>
+<body>
+
+<h2>Resume</h2>
+<div id="drop_box" ondrop="drag_drop(event)" ondragover="return false">
+<form id="upload_form" enctype="multipart/form-data" method="post">
+  <input type="file" name="fileToUpload" id="filetoupload">
+  <label for ="filetoupload"><strong>Choose a file</strong>
+  <span class="dragndrop"> or drag it here</span>.</label><br>	
+  <input type="button" value="Upload File" onclick="fileUpload()">
+  <h3 id="stats"></h3>
+  <div id="pbarcase">
+  	<div id="pbar"></div>
+  	<div id="pbart"></div>
+  </div>
+</form>
+</div>
+</body>
+</html>
