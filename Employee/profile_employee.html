@@ -6,7 +6,25 @@
 </head>
 <body>
 
-<h1>Skills</h1>
+<h2>Basic Information</h2>
+            <table>
+                <tr>
+                    <td>Career History</td>
+                    <td><?php echo $customer['name']; ?></td>
+                </tr>
+                <tr>
+                    <td>Education</td>
+                    <td><?php echo $customer['email']; ?></td>
+                </tr>
+                <tr>
+                    <td>Skills</td>
+                    <td><?php echo $customer['phone']; ?></td>
+                </tr>
+                <tr>
+                    <td>Address</td>
+                    <td><?php echo $customer['address']; ?></td>
+                </tr>
+            </table>
 
 <h2>Resume</h2>
 <div id="drop_box" ondrop="drag_drop(event)" ondragover="return false">
