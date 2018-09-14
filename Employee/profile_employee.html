@@ -8,6 +8,17 @@
 
 <h2>Basic Information</h2>
             <table>
+			<tr>
+                    <td>Edit Profile</td>
+                    <td><?php echo $customer['email']; ?></td>
+					<td>
+					<tr>
+					<td><input type="text" class="input" name="name" onkeyup="AllowAlphabet()" placeholder="" />
+                            <div class="error error-name"></div>
+                        </td>
+					</tr>
+					<td><input type="submit" class="submit" name="Edit" value="Edit Personal Details"></td>
+					</tr
                 <tr>
                     <td>Career History</td>
                     <td><?php echo $customer['name']; ?></td>
@@ -49,7 +60,23 @@
 				<td>
 				<div class="form-group">
                             <label for="">Salary Range</label>
-                            <select name="children">
+							<tr>
+                            <td><select name="children">
+                                <option value="">please select</option>
+                                <option value="0">AU$20k</option>
+                                <option value="1">AU$30k</option>
+                                <option value="2">AU$40k</option>
+                                <option value="3">AU$50k</option>
+                                <option value="4">AU$60k</option>
+                                <option value="5">AU$70k</option>
+                                <option value="6">AU$80k</option>
+                                <option value="7">AU$100k</option>
+                                <option value="8">AU$120k</option>
+                                <option value="9">AU$150k</option>
+                                <option value="10">AU$200k</option>
+								<option value="10">AU$200k+</option>
+                            </select> to
+							<select name="children">
                                 <option value="">please select</option>
                                 <option value="0">AU$20k</option>
                                 <option value="1">AU$30k</option>
@@ -65,6 +92,7 @@
 								<option value="10">AU$200k+</option>
                             </select>
                             <div class="clear"></div>
+							</tr>
                         </div>
 						</td>
 						</tr>
