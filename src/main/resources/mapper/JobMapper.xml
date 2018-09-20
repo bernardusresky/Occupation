@@ -11,6 +11,7 @@
         <result column="description" property="description"/>
         <result column="job_requirement" property="jobRequirement"/>
         <result column="create_time" property="createTime"/>
+        <result column="create_employer_email" property="createEmployerEmail"/>
         <result column="status" property="status"/>
     </resultMap>
 

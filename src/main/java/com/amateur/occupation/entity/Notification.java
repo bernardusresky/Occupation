@@ -2,6 +2,7 @@ package com.amateur.occupation.entity;
 
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,7 +22,7 @@ public class Notification implements Serializable {
     /**
      * notification id
      */
-    @TableId("note_id")
+    @TableId(value = "note_id", type = IdType.AUTO)
     private int noteId;
     /**
      * notification content
