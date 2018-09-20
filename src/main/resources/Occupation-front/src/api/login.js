@@ -15,10 +15,6 @@ export function getInfo() {
   return request({
     url: '/user',
     method: 'get'
-    // params: {
-    //   email: token.split('&')[0],
-    //   userType: token.split('&')[1]
-    // }
   })
 }
 
