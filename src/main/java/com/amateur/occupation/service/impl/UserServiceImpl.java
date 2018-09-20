@@ -33,11 +33,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             User user = userMapper.selectById(email);
             if (user == null) {
                 return TResult.failure(TResultCode.USER_NOT_EXIST);
-            } else {
+            } else if (user.getPassword().equals(password)) {
                 log.info(user.toString());
                 TResult result = TResult.success(user.getEmail());
                 result.setData(user);
                 return result;
+            } else {
+                return TResult.failure(TResultCode.DATA_IS_WRONG);
             }
         }
 
