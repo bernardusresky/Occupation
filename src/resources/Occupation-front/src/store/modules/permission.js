@@ -47,13 +47,13 @@ const permission = {
     GenerateRoutes({ commit }, data) {
       return new Promise(resolve => {
         const { userType } = data
-        let accessedRouters
-        if (userType === 0 || userType === 1 || userType === 2) {
-          accessedRouters = asyncRouterMap
-        } else {
-          accessedRouters = filterAsyncRouter(asyncRouterMap, userType)
-        }
-        console.log(accessedRouters)
+        const accessedRouters = filterAsyncRouter(asyncRouterMap, userType)
+        // if (userType === 0 || userType === 1 || userType === 2) {
+        //   accessedRouters = asyncRouterMap
+        // } else {
+        //   accessedRouters = filterAsyncRouter(asyncRouterMap, userType)
+        // }
+        // console.log(accessedRouters)
         commit('SET_ROUTERS', accessedRouters)
         resolve()
       })

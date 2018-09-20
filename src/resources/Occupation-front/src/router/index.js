@@ -52,6 +52,18 @@ export default new Router({
 
 export const asyncRouterMap = [
   {
+    path: '/job',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Job',
+        component: () => import('@/views/employee/job/index'),
+        meta: { title: 'Job', icon: 'table', userType: 2 }
+      }
+    ]
+  },
+  {
     path: '/example',
     component: Layout,
     redirect: '/example/table',
@@ -145,6 +157,5 @@ export const asyncRouterMap = [
       }
     ]
   },
-
   { path: '*', redirect: '/404', hidden: true }
 ]
