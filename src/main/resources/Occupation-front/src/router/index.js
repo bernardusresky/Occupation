@@ -54,6 +54,7 @@ export const asyncRouterMap = [
   {
     path: '/job',
     component: Layout,
+    meta: { userType: 2 },
     children: [
       {
         path: 'index',
