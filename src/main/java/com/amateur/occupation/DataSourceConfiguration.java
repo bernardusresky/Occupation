@@ -12,7 +12,9 @@ import javax.sql.DataSource;
 
 @Slf4j
 @Configuration
+//@PropertySource("classpath:application.properties")
 public class DataSourceConfiguration {
+
     @Value("${occupation.runtime}")
     private boolean runtime;
 

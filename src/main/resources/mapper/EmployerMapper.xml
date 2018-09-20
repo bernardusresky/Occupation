@@ -13,5 +13,4 @@
         <result column="domain" property="domain"/>
         <result column="scale" property="scale"/>
     </resultMap>
-
 </mapper>
