@@ -64,96 +64,122 @@ export const asyncRouterMap = [
     ]
   },
   {
-    path: '/example',
+    path: '/offer',
     component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'example', userType: 0 },
-    children: [
-      {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
-      },
-      {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
-      }
-    ]
-  },
-
-  {
-    path: '/form',
-    component: Layout,
-    meta: { userType: 1 },
     children: [
       {
         path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
+        name: 'Offer',
+        component: () => import('@/views/employee/offer/index'),
+        meta: { title: 'Offer', icon: 'table', userType: 2 }
       }
     ]
   },
-
   {
-    path: '/nested',
+    path: '/ee_profile',
     component: Layout,
-    redirect: '/nested/menu1',
-    name: 'nested',
-    meta: {
-      title: 'nested',
-      icon: 'nested',
-      meta: { userType: 2 }
-    },
     children: [
       {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'menu1',
-        meta: { title: 'menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'menu1-1',
-            meta: { title: 'menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'menu1-2',
-            meta: { title: 'menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'menu1-2-1',
-                meta: { title: 'menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'menu1-2-2',
-                meta: { title: 'menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'menu1-3',
-            meta: { title: 'menu1-3' }
-          }
-        ]
-      },
+        path: 'index',
+        name: 'Profile',
+        component: () => import('@/views/employee/profile/index'),
+        meta: { title: 'Profile', icon: 'table', userType: 2 }
+      }
+    ]
+  },
+  {
+    path: '/ee_notification',
+    component: Layout,
+    children: [
       {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        meta: { title: 'menu2' }
+        path: 'index',
+        name: 'Notification',
+        component: () => import('@/views/employee/notification/index'),
+        meta: { title: 'Notification', icon: 'table', userType: 2 }
+      }
+    ]
+  },
+  {
+    path: '/myjob',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Job',
+        component: () => import('@/views/employer/job/index'),
+        meta: { title: 'Job', icon: 'form', userType: 1 }
+      }
+    ]
+  },
+  {
+    path: '/applicants',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Applicants',
+        component: () => import('@/views/employer/applicants/index'),
+        meta: { title: 'Applicants', icon: 'form', userType: 1 }
+      }
+    ]
+  },
+  {
+    path: '/er_profile',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Profile',
+        component: () => import('@/views/employer/profile/index'),
+        meta: { title: 'Profile', icon: 'form', userType: 1 }
+      }
+    ]
+  },
+  {
+    path: '/er_notification',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Notification',
+        component: () => import('@/views/employer/notification/index'),
+        meta: { title: 'Notification', icon: 'form', userType: 1 }
+      }
+    ]
+  },
+  {
+    path: '/ad_employee',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Employee',
+        component: () => import('@/views/admin/employee/index'),
+        meta: { title: 'Employee', icon: 'tree', userType: 0 }
+      }
+    ]
+  },
+  {
+    path: '/ad_employer',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Employer',
+        component: () => import('@/views/admin/employer/index'),
+        meta: { title: 'Employer', icon: 'tree', userType: 0 }
+      }
+    ]
+  },
+  {
+    path: '/ad_notification',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Notification',
+        component: () => import('@/views/admin/notification/index'),
+        meta: { title: 'Notification', icon: 'tree', userType: 0 }
       }
     ]
   },
