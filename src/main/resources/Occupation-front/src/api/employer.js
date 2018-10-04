@@ -1,29 +1,36 @@
 import request from '@/utils/request'
 
-export function getRecommendJobList() {
+export function getMyJobList() {
   return request({
-    url: '/employee/job/list',
+    url: '/employer/job/list',
     method: 'get'
   })
 }
 
 export function getProfile() {
   return request({
-    url: '/employee/profile',
+    url: '/employer/profile',
     method: 'get'
   })
 }
 
 export function modifyProfile() {
   return request({
-    url: '/employee/profile',
+    url: '/employer/profile',
     method: 'post'
   })
 }
 
 export function getNotification() {
   return request({
-    url: '/employee/notification',
+    url: '/employer/notification',
+    method: 'get'
+  })
+}
+
+export function getApplicants() {
+  return request({
+    url: '/employer/applicants',
     method: 'get'
   })
 }
