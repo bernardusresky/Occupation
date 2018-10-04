@@ -6,7 +6,9 @@
     <resultMap id="BaseResultMap" type="com.amateur.occupation.entity.User">
         <id column="email" property="email"/>
         <result column="password" property="password"/>
-        <result column="user_type" property="userType" />
+        <result column="user_type" property="userType"/>
+        <result column="is_forbidden" property="isForbidden"/>
+        <result column="reported_num" property="reportedNum"/>
     </resultMap>
 
 </mapper>

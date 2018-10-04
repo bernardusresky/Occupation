@@ -11,6 +11,7 @@ import com.amateur.occupation.util.EmailUtil;
 import com.amateur.occupation.util.Enycryption;
 import com.amateur.occupation.util.TResult;
 import com.amateur.occupation.util.TResultCode;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -44,9 +45,14 @@ public class UserController {
         TResult result = userService.login(email, password);
         if (result.getCode() == TResultCode.SUCCESS.getCode()) {
             log.info("set session attribute id:" + result.getMessage());
-            session.setAttribute(Const.ID_KEY, result.getMessage());
             User user = (User) result.getData();
-            session.setAttribute(Const.USER_TYPE_KEY, user.getUserType());
+            if (user.getIsForbidden() == 1) {
+                return TResult.failure(TResultCode.PERMISSION_NO_ACCESS);
+            } else {
+                session.setAttribute(Const.ID_KEY, result.getMessage());
+                session.setAttribute(Const.USER_TYPE_KEY, user.getUserType());
+
+            }
         }
         return result;
     }
@@ -102,6 +108,23 @@ public class UserController {
                 return TResult.failure(TResultCode.BUSINESS_ERROR);
         }
         return result;
+    }
+
+    /**
+     * to be tested
+     *
+     * @param email
+     * @return
+     */
+    @PutMapping("/report/{email}")
+    public TResult report(@PathVariable("email") String email) {
+        EntityWrapper<User> ew = new EntityWrapper<>();
+        boolean result = userService.updateForSet("  reported_num=reported_num+1 ", ew.eq("email", email));
+        if (result) {
+            return TResult.success("update user add reportNum 1 ");
+        } else {
+            return TResult.failure(TResultCode.BUSINESS_ERROR);
+        }
     }
 
     @PostMapping("/logout")

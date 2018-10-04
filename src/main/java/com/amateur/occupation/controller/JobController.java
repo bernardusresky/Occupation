@@ -32,7 +32,7 @@ public class JobController {
 
     @PostMapping
     public TResult add(@RequestBody Job job) {
-        if (((int) session.getAttribute(Const.USER_TYPE_KEY)) == 0) {
+        if (((int) session.getAttribute(Const.USER_TYPE_KEY)) == 1) {
             boolean result = jobService.insert(job);
             if (result) {
                 return TResult.success("insert Job success,jobId:" + job.getJobId());
@@ -47,27 +47,40 @@ public class JobController {
 
     @DeleteMapping("/{jobId}")
     public TResult delete(@PathVariable("jobId") int jobId) {
-        if (((int) session.getAttribute(Const.USER_TYPE_KEY)) == 0) {
+        if (((int) session.getAttribute(Const.USER_TYPE_KEY)) == 1) {
+            TResult getResult = get(jobId);
+            if (!getResult.getCode().equals(TResultCode.SUCCESS.getCode())) {
+                return TResult.failure(TResultCode.RESULE_DATA_NONE);
+            }
+            Job job = ((Job) getResult.getData());
+            if (!job.getCreateEmployerEmail().equals(session.getAttribute(Const.ID_KEY))) {
+                return TResult.failure(TResultCode.PERMISSION_NO_ACCESS);
+            }
             boolean result = jobService.deleteById(jobId);
             if (result) {
                 return TResult.success("delete Job success,jobId:" + jobId);
             } else {
                 return TResult.failure(TResultCode.BUSINESS_ERROR);
-
             }
         } else {
             return TResult.failure(TResultCode.PERMISSION_NO_ACCESS);
         }
+
     }
 
     @PutMapping
     public TResult update(@RequestBody Job job) {
-        EntityWrapper<Job> ew = new EntityWrapper<>();
-        boolean result = jobService.update(job, ew.eq("email", job.getJobId()));
-        if (result) {
-            return TResult.success(job);
+        if (((int) session.getAttribute(Const.USER_TYPE_KEY)) == 1
+                && job.getCreateEmployerEmail().equals(session.getAttribute(Const.ID_KEY))) {
+            EntityWrapper<Job> ew = new EntityWrapper<>();
+            boolean result = jobService.update(job, ew.eq("job_id", job.getJobId()));
+            if (result) {
+                return TResult.success(job);
+            } else {
+                return TResult.failure(TResultCode.BUSINESS_ERROR);
+            }
         } else {
-            return TResult.failure(TResultCode.BUSINESS_ERROR);
+            return TResult.failure(TResultCode.PERMISSION_NO_ACCESS);
         }
     }
 
@@ -83,8 +96,18 @@ public class JobController {
 
     @GetMapping("/list")
     public TResult getAll() {
-        EntityWrapper ew = new EntityWrapper<Job>();
-        List<JobVO> jobVOList=jobService.getAllJob();
+        List<JobVO> jobVOList = jobService.getAllJob();
+        if (jobVOList == null || jobVOList.size() == 0) {
+            return TResult.failure(TResultCode.RESULE_DATA_NONE);
+        } else {
+            return TResult.success(jobVOList);
+        }
+    }
+
+    @GetMapping("/search/{content}")
+    public TResult search(@PathVariable("content") String content) {
+        log.debug("job search:" + content);
+        List<JobVO> jobVOList = jobService.searchJob(content);
         if (jobVOList == null || jobVOList.size() == 0) {
             return TResult.failure(TResultCode.RESULE_DATA_NONE);
         } else {

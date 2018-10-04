@@ -39,6 +39,11 @@ public class Employer implements Serializable {
      */
     @TableField(exist = false)
     private int userType;
+    @TableField(exist = false)
+    private int isForbidden;
+    @TableField(exist = false)
+    private int reportedNum;
+
 
     public Employer(String email, String name, String phone, String address, String description, String domain, String scale) {
         this.email = email;
@@ -48,6 +53,21 @@ public class Employer implements Serializable {
         this.description = description;
         this.domain = domain;
         this.scale = scale;
+    }
+
+    public Employer(String email, String name, String phone, String address, String description, String domain, String scale,
+                    String password, int userType, int isForbidden, int reportNum) {
+        this.email = email;
+        this.name = name;
+        this.phone = phone;
+        this.address = address;
+        this.description = description;
+        this.domain = domain;
+        this.scale = scale;
+        this.password = password;
+        this.userType = userType;
+        this.isForbidden = isForbidden;
+        this.reportedNum = reportNum;
     }
 
     public Employer(String email, String name, String phone, String address, String description, String domain, String scale,

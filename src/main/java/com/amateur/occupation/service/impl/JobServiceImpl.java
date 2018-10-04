@@ -6,12 +6,14 @@ import com.amateur.occupation.mapper.JobMapper;
 import com.amateur.occupation.service.JobService;
 import com.amateur.occupation.vo.JobVO;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Service
 public class JobServiceImpl extends ServiceImpl<JobMapper, Job> implements JobService {
     private JobMapper jobMapper;
@@ -25,6 +27,44 @@ public class JobServiceImpl extends ServiceImpl<JobMapper, Job> implements JobSe
         List<JobVO> jobVOList = new ArrayList<>();
         List<Map<Integer, Object>> list = jobMapper.selectAllJob();
         if (list != null && list.size() > 0) {
+            for (Map<Integer, Object> map : list) {
+                if (map != null) {
+                    JobVO jobVO = new JobVO();
+                    jobVO.setJobId((int) map.get("job_id"));
+                    jobVO.setNumber((int) map.get("number"));
+                    jobVO.setSalary((String) map.get("salary"));
+                    jobVO.setExpectWorkExperience((String) map.get("expect_work_experience"));
+                    jobVO.setExpectEduBackground((String) map.get("expect_edu_background"));
+                    jobVO.setDescription((String) map.get("description"));
+                    jobVO.setJobRequirement((String) map.get("job_requirement"));
+                    jobVO.setCreateTime((String) map.get("create_time"));
+                    String email = (String) map.get("email");
+                    String name = (String) map.get("name");
+                    String phone = (String) map.get("phone");
+                    String address = (String) map.get("address");
+                    String description = (String) map.get("rdescription");
+                    String domain = (String) map.get("domain");
+                    String scale = (String) map.get("scale");
+                    Employer employer = new Employer(email, name, phone, address, description, domain, scale);
+                    jobVO.setEmployer(employer);
+                    jobVOList.add(jobVO);
+                }
+            }
+        }
+        return jobVOList;
+    }
+
+    @Override
+    public List<JobVO> searchJob(String content) {
+        List<JobVO> jobVOList = new ArrayList<>();
+        String searchContent = " %" + content + "% ";
+        log.debug("JobserviceImpl searchJob is " + searchContent);
+        List<Map<Integer, Object>> list = jobMapper.searchJob(searchContent);
+        if (list != null) {
+            if (list.size() == 0) {
+                log.debug("jobVOList.size is:" + list.size());
+                return jobVOList;
+            }
             for (Map<Integer, Object> map : list) {
                 if (map != null) {
                     JobVO jobVO = new JobVO();

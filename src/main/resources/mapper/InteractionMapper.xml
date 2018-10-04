@@ -4,10 +4,11 @@
 
     <!-- general result map -->
     <resultMap id="BaseResultMap" type="com.amateur.occupation.entity.Interaction">
-        <id column="job_id" property="jobId"/>
-        <id column="create_time" property="createTime"/>
-        <result column="employee_email" property="employee_email"/>
-        <result column="employer_email" property="employer_email"/>
+        <id column="inter_id" property="interId"/>
+        <result column="job_id" property="jobId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="employee_email" property="employeeEmail"/>
+        <result column="employer_email" property="employerEmail"/>
         <result column="check_status" property="checkStatus"/>
     </resultMap>
 

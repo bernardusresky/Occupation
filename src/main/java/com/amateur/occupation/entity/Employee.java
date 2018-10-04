@@ -40,6 +40,10 @@ public class Employee implements Serializable {
     private String password;
     @TableField(exist = false)
     private int userType;
+    @TableField(exist = false)
+    private int isForbidden;
+    @TableField(exist = false)
+    private int reportedNum;
 
 
     public Employee(String email, String name, String phone, String birthday,
@@ -60,6 +64,27 @@ public class Employee implements Serializable {
         this.userType = userType;
     }
 
+    public Employee(String email, String name, String phone, String birthday,
+                    int gender, String eduBackground, String workExperience, String expectSalary,
+                    String expectCity, String address, String description, String password, int userType,
+                    int isForbidden, int reportedNum) {
+        this.email = email;
+        this.name = name;
+        this.phone = phone;
+        this.birthday = birthday;
+        this.gender = gender;
+        this.eduBackground = eduBackground;
+        this.workExperience = workExperience;
+        this.expectSalary = expectSalary;
+        this.expectCity = expectCity;
+        this.address = address;
+        this.description = description;
+        this.password = password;
+        this.userType = userType;
+        this.isForbidden = isForbidden;
+        this.reportedNum = reportedNum;
+    }
+
     public Employee(String email, String name, String phone, String birthday, int gender, String eduBackground,
                     String workExperience, String expectSalary, String expectCity,
                     String address, String description) {
@@ -73,7 +98,6 @@ public class Employee implements Serializable {
         this.expectSalary = expectSalary;
         this.expectCity = expectCity;
         this.address = address;
-        this.description = description;
     }
 
     public Employee() {

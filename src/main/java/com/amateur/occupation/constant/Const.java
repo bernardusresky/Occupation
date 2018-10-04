@@ -13,5 +13,8 @@ public class Const {
     public static int PORT = 8080;
     public final static String EMPLOYEE_URL = "employee";
     public final static String EMPLOYER_URL = "employer";
+    public final static int ADMIN_TYPE = 0;
+    public final static int EMPLOYER_TYPE = 1;
+    public final static int EMPLOYEE_TYPE = 2;
     public final static String LOCAL_IP = "127.0.0.1";
 }

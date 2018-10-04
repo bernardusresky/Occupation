@@ -5,11 +5,13 @@ import com.amateur.occupation.entity.Notification;
 import com.amateur.occupation.service.NotificationService;
 import com.amateur.occupation.util.TResult;
 import com.amateur.occupation.util.TResultCode;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -43,12 +45,30 @@ public class NotificationController {
     public TResult get(@PathVariable("noteId") int noteId) {
         Notification notification = notificationService.selectById(noteId);
         if (notification == null) {
-            return TResult.failure(TResultCode.USER_NOT_EXIST);
+            return TResult.failure(TResultCode.RESULE_DATA_NONE);
         } else {
             return TResult.success(notification);
         }
-
     }
+
+
+    /**
+     * to be tested
+     * @return
+     */
+    @GetMapping("/list")
+    public TResult list() {
+        String email = (String) session.getAttribute(Const.ID_KEY);
+        EntityWrapper<Notification> ew = new EntityWrapper<>();
+        List<Notification> notificationList = notificationService.selectList(
+                ew.eq("target_email", email).or("target_email='ALL' "));
+        if (notificationList == null) {
+            return TResult.failure(TResultCode.RESULE_DATA_NONE);
+        } else {
+            return TResult.success(notificationList);
+        }
+    }
+
 
     @DeleteMapping
     public TResult delete(@RequestParam("noteId") int noteId) {
@@ -58,7 +78,6 @@ public class NotificationController {
                 return TResult.success("delete notification success,noteId:" + noteId);
             } else {
                 return TResult.failure(TResultCode.BUSINESS_ERROR);
-
             }
         } else {
             return TResult.failure(TResultCode.PERMISSION_NO_ACCESS);

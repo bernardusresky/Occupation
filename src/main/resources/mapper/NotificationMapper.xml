@@ -6,7 +6,8 @@
     <resultMap id="BaseResultMap" type="com.amateur.occupation.entity.Notification">
         <id column="note_id" property="noteId"/>
         <result column="content" property="content"/>
-        <result column="email" property="email"/>
+        <result column="target_email" property="targetEmail"/>
+        <result column="crt_email" property="crtEmail"/>
         <result column="create_time" property="createTime"/>
     </resultMap>
 

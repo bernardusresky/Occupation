@@ -2,6 +2,7 @@ package com.amateur.occupation.entity;
 
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,14 +16,14 @@ import java.io.Serializable;
 @AllArgsConstructor
 @XmlAccessorType
 @XmlRootElement
-@TableName("interact")
+@TableName("interaction")
 public class Interaction implements Serializable {
-    @TableId("job_id")
+    @TableId(value = "inter_id", type = IdType.AUTO)
+    private int interId;
     private int jobId;
     /**
      * timestamp,like yyyy-MM-dd HH:MM:SS
      */
-    @TableId("create_time")
     private String createTime;
     private String employeeEmail;
     private String employerEmail;

@@ -28,13 +28,18 @@ public class Notification implements Serializable {
      * notification content
      */
     private String content;
+
+    /**
+     * accept email,ALL is for all email
+     */
+    private String targetEmail;
     /**
      * create notification's user email
      */
-    private String email;
+    private String crtEmail;
     /**
-     * notification creat time (milliseconds from 1970.01.01)
+     * timestamp,like yyyy-MM-dd HH:MM:SS
      */
-    private long createTime;
+    private String createTime;
 
 }
