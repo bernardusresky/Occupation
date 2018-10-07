@@ -93,8 +93,11 @@ public class UserController {
                 result = TResult.success(new User(email, "******", userType));
                 break;
             case 1:
+                System.out.println(email);
                 result = employerService.get(email);
+                System.out.println(result);
                 Employer employer = (Employer) result.getData();
+                System.out.println(result.getData());
                 employer.setUserType(userType);
                 result.setData(employer);
                 break;
