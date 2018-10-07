@@ -1,6 +1,5 @@
 package com.amateur.occupation.service.impl;
 
-import com.amateur.occupation.entity.Employee;
 import com.amateur.occupation.entity.Employer;
 import com.amateur.occupation.entity.User;
 import com.amateur.occupation.mapper.EmployerMapper;
@@ -13,6 +12,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -54,5 +57,32 @@ public class EmployerServiceImpl extends ServiceImpl<EmployerMapper, Employer> i
         } else {
             return TResult.success(employer);
         }
+    }
+
+    @Override
+    public List<Employer> list() {
+        List<Employer> employerList = new ArrayList<>();
+        List<Map<Integer, Object>> list = employerMapper.list();
+        if (list != null && list.size() > 0) {
+            for (Map<Integer, Object> map : list) {
+                if (map != null) {
+                    String email = (String) map.get("email");
+                    String name = (String) map.get("name");
+                    String phone = (String) map.get("phone");
+                    String address = (String) map.get("address");
+                    String description = (String) map.get("description");
+                    String domain = (String) map.get("domain");
+                    String scale = (String) map.get("scale");
+                    String password = (String) map.get("password");
+                    int userType = (int) map.get("user_type");
+                    int isForbidden = (int) map.get("is_forbidden");
+                    int reportedNum = (int) map.get("reported_num");
+                    Employer employer = new Employer(email, name, phone, address, description, domain, scale,
+                            password, userType, isForbidden, reportedNum);
+                    employerList.add(employer);
+                }
+            }
+        }
+        return employerList;
     }
 }

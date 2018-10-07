@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Map;
 
 
@@ -73,14 +74,39 @@ public class UserController {
         return result;
     }
 
-    @GetMapping("/add")
-    public TResult add(@RequestParam("data") String data) {
-        return null;
+
+    @GetMapping("/employee_list")
+    public TResult employeeList() {
+        if ((int) session.getAttribute(Const.USER_TYPE_KEY) == 0) {
+            List<Employee> employeeList = employeeService.list();
+            if (employeeList == null) {
+                return TResult.failure(TResultCode.BUSINESS_ERROR);
+            } else {
+                return TResult.success(employeeList);
+            }
+        } else {
+            return TResult.failure(TResultCode.PERMISSION_NO_ACCESS);
+        }
+
+    }
+
+    @GetMapping("/employer_list")
+    public TResult employerList() {
+        if ((int) session.getAttribute(Const.USER_TYPE_KEY) == 0) {
+            List<Employer> employerList = employerService.list();
+            if (employerList == null) {
+                return TResult.failure(TResultCode.BUSINESS_ERROR);
+            } else {
+                return TResult.success(employerList);
+            }
+        } else {
+            return TResult.failure(TResultCode.PERMISSION_NO_ACCESS);
+        }
+
     }
 
 
     @GetMapping
-//    public TResult get(@RequestParam("email") String email, @RequestParam("userType") int userType) {
     public TResult get() {
         String email = (String) session.getAttribute(Const.ID_KEY);
         if (session.getAttribute(Const.USER_TYPE_KEY) == null) {
