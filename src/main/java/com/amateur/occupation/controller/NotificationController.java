@@ -27,8 +27,13 @@ public class NotificationController {
     }
 
     @PostMapping
-    public TResult add(Notification notification) {
+    public TResult add(@RequestBody Notification notification) {
         if (((int) session.getAttribute(Const.USER_TYPE_KEY)) == 0) {
+            System.out.println(notification.getContent());
+            System.out.println(notification.getCreateTime());
+            System.out.println(notification.getCrtEmail());
+            System.out.println(notification.getNoteId());
+            System.out.println(notification.getTargetEmail());
             boolean result = notificationService.insert(notification);
             if (result) {
                 return TResult.success("insert notification success,noteId:" + notification.getNoteId());
@@ -61,7 +66,7 @@ public class NotificationController {
         String email = (String) session.getAttribute(Const.ID_KEY);
         EntityWrapper<Notification> ew = new EntityWrapper<>();
         List<Notification> notificationList = notificationService.selectList(
-                ew.eq("target_email", email).or("target_email='ALL' "));
+                ew.eq("target_email", email).or().eq("crt_email", email));
         if (notificationList == null) {
             return TResult.failure(TResultCode.RESULE_DATA_NONE);
         } else {

@@ -5,47 +5,35 @@
 
       <el-table-column align="center" label='ID' width="95" prop="ID" sortable>
         <template slot-scope="scope">
-          {{scope.row.id}}
+          {{scope.row.noteId}}
         </template>
       </el-table-column>
 
-      <el-table-column label="From" width="110" align="center" prop="From">
+      <el-table-column label="From" width="150" align="center" prop="From">
         <template slot-scope="scope">
-          {{scope.row.from}}
+          {{scope.row.crtEmail}}
         </template>
       </el-table-column>
 
-      <el-table-column label="To" width="110" align="center" prop="To">
+      <el-table-column label="To" width="150" align="center" prop="To">
         <template slot-scope="scope">
-          {{scope.row.to}}
+          {{scope.row.targetEmail}}
         </template>
       </el-table-column>
 
-      <el-table-column label="Message" prop="Message">
+      <el-table-column label="Content" prop="Content">
         <template slot-scope="scope">
-          {{scope.row.message}}
+          {{scope.row.content}}
         </template>
       </el-table-column>
 
      
-      <el-table-column label="Time" width="200" align="center" prop="Time" sortable>
+      <el-table-column label="CreateTime" width="200" align="center" prop="CreateTime" sortable>
          <template slot-scope="scope">
           <i class="el-icon-time"></i>
-          <span>{{scope.row.time}}</span>
+          <span>{{scope.row.createTime}}</span>
         </template>
       </el-table-column>
-
-       <!-- <el-table-column label="Operation" width="200" align="center">
-        <template slot-scope="scope">
-        <el-button
-          size="mini"
-          @click="dialogFormVisible = true, detail = scope.row">detail</el-button>
-        <el-button
-          size="mini"
-          type="danger"
-          @click="handleDelete(scope.$index, scope.row)">apply</el-button>
-      </template>
-      </el-table-column> -->
     </el-table>
      <el-button type="primary" icon="el-icon-edit" circle style="margin-top:30px;" @click="dialogFormVisible = true"></el-button>
 
@@ -56,8 +44,8 @@
             <el-input type="text" v-model="newNotification.to" ></el-input>
             </el-form-item>
 
-            <el-form-item label="Message" :label-width="formLabelWidth">
-            <el-input type="textarea" v-model="newNotification.message" ></el-input>
+            <el-form-item label="Content" :label-width="formLabelWidth">
+            <el-input type="textarea" v-model="newNotification.content" ></el-input>
             </el-form-item>
 
             <el-form-item :label-width="formLabelWidth">
@@ -71,7 +59,7 @@
 </template>
 
 <script>
-import { getNotification } from '@/api/admin'
+import { getNotification, newNotification } from '@/api/admin'
 
 export default {
   data() {
@@ -83,7 +71,7 @@ export default {
       formLabelWidth: '160px',
       newNotification: {
         to: '',
-        message: ''
+        content: ''
       }
     }
   },
@@ -115,6 +103,10 @@ export default {
       })
     },
     handleNew() {
+      newNotification(this.newNotification).then(response => {
+        this.dialogFormVisible = false
+        this.fetchData()
+      })
     }
   }
 }

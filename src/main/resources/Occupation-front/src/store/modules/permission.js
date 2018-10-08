@@ -6,8 +6,9 @@ import { asyncRouterMap, constantRouterMap } from '@/router'
  * @param route
  */
 function hasPermission(userType, route) {
-  if (route.meta && route.meta.userType) {
-    // return userType.some(role => route.meta.userType.indexOf(role) >= 0)
+  // console.log(userType + '+++++' + route.meta.userType)
+  if (route.meta && (route.meta.userType === 1 || route.meta.userType === 0 || route.meta.userType === 2)) {
+  // return userType.some(role => route.meta.userType.indexOf(role) >= 0)
     return userType === route.meta.userType
   } else {
     return true

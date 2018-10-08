@@ -37,12 +37,11 @@
 </template>
 
 <script>
-import { getProfile } from '@/api/employer'
+import { getProfile, modifyProfile } from '@/api/employer'
 
 export default {
   data() {
     return {
-      profileLoading: true,
       formLabelWidth: '160px',
       detail: {
         email: '',
@@ -60,14 +59,14 @@ export default {
   },
   methods: {
     fetchData() {
-      this.profileLoading = true
       getProfile().then(response => {
         this.detail = response.data
-        this.profileLoading = false
       })
     },
     handleSave() {
-
+      modifyProfile(this.detail).then(response => {
+        this.fetchData()
+      })
     }
   }
 }

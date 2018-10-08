@@ -53,13 +53,10 @@
         <el-button
           size="mini"
           type="danger"
-          @click="handleDelete(scope.$index, scope.row)">delete</el-button>
+          @click="handleDelete(scope.row.email)">delete</el-button>
       </template>
       </el-table-column>
     </el-table>
-    <el-button type="primary" icon="el-icon-edit" circle style="margin-top:30px;" @click="dialogFormVisible1 = true"></el-button>
-    
-
     <el-dialog title="Employee Detail" :visible.sync="dialogFormVisible">
         <el-form :model="detail">
             <el-form-item label="Email" :label-width="formLabelWidth">
@@ -95,48 +92,11 @@
             </el-form-item>
         </el-form>
     </el-dialog>
-     <el-dialog title="New Employee" :visible.sync="dialogFormVisible1">
-        <el-form :model="newEmployer">
-            <el-form-item label="Email" :label-width="formLabelWidth">
-            <el-input v-model="newEmployer.email" ></el-input>
-            </el-form-item>
-
-            <el-form-item label="Name" :label-width="formLabelWidth">
-            <el-input v-model="newEmployer.name"></el-input>
-            </el-form-item>
-
-            <el-form-item label="Phone" :label-width="formLabelWidth">
-            <el-input v-model="newEmployer.phone" ></el-input>
-            </el-form-item>
-
-           <el-form-item label="Address" :label-width="formLabelWidth">
-            <el-input type="textarea" v-model="newEmployer.address" ></el-input>
-            </el-form-item>
-
-            <el-form-item label="Description" :label-width="formLabelWidth">
-            <el-input type="textarea" v-model="newEmployer.description" ></el-input>
-            </el-form-item>
-
-             <el-form-item label="Domain" :label-width="formLabelWidth">
-            <el-input type="textarea" v-model="newEmployer.domain" ></el-input>
-            </el-form-item>
-
-            <el-form-item label="Scale" :label-width="formLabelWidth">
-            <el-input type="textarea" v-model="newEmployer.scale" ></el-input>
-            </el-form-item>
-
-             <el-form-item :label-width="formLabelWidth">
-              <el-button type="primary" @click="handleNew()">create</el-button>
-            </el-form-item>
-        </el-form>
-    </el-dialog>
-
-
   </div>
 </template>
 
 <script>
-import { getEmployerList } from '@/api/admin'
+import { getEmployerList, saveEmployer, deleteEmployer } from '@/api/admin'
 
 export default {
   data() {
@@ -148,15 +108,6 @@ export default {
       dialogFormVisible1: false,
       formLabelWidth: '160px',
       detail: {
-        email: '',
-        name: '',
-        phone: '',
-        address: '',
-        description: '',
-        domain: '',
-        scale: ''
-      },
-      newEmployer: {
         email: '',
         name: '',
         phone: '',
@@ -190,18 +141,20 @@ export default {
     fetchData() {
       this.listLoading = true
       getEmployerList().then(response => {
-        this.list = response.data.items
+        this.list = response.data
         this.listLoading = false
       })
     },
     handleSave() {
-
+      saveEmployer(this.detail).then(response => {
+        this.dialogFormVisible = false
+        this.fetchData()
+      })
     },
-    handleDelete() {
-
-    },
-    handleNew() {
-
+    handleDelete(email) {
+      deleteEmployer(email).then(response => {
+        this.fetchData()
+      })
     }
   }
 }

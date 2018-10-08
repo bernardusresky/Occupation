@@ -21,40 +21,40 @@
         </template>
       </el-table-column>
 
-       <el-table-column label="Birthday" width="110" prop="Birthday" sortable>
+       <el-table-column label="Birthday" width="115" prop="Birthday" sortable>
         <template slot-scope="scope">
           <i class="el-icon-time"></i>
           <span>{{scope.row.birthday}}</span>
         </template>
       </el-table-column>
 
-       <el-table-column label="Gender" width="100" prop="Gender" sortable>
+       <el-table-column label="Gender" width="95" prop="Gender" sortable>
         <template slot-scope="scope">
           {{scope.row.gender}}
         </template>
       </el-table-column>
 
-      <el-table-column label="Edu Background" width="170" align="center" sortable>
+      <el-table-column label="Edu Background" width="160" align="center" sortable>
         <template slot-scope="scope">
-          {{scope.row.edu_background}}
+          {{scope.row.eduBackground}}
         </template>
       </el-table-column>
 
-      <el-table-column label="Work Experience" width="170" align="center" sortable>
+      <el-table-column label="Work Experience" width="160" align="center" sortable>
         <template slot-scope="scope">
-          {{scope.row.work_experience}}
+          {{scope.row.workExperience}}
         </template>
       </el-table-column>
 
        <el-table-column label="Expect Salary" width="80" align="center">
         <template slot-scope="scope">
-          {{scope.row.expect_salary}}
+          {{scope.row.expectSalary}}
         </template>
       </el-table-column>
 
        <el-table-column label="Expect City" width="80" align="center">
         <template slot-scope="scope">
-          {{scope.row.expect_city}}
+          {{scope.row.expectCity}}
         </template>
       </el-table-column>
 
@@ -78,13 +78,10 @@
         <el-button
           size="mini"
           type="danger"
-          @click="handleDelete(scope.$index, scope.row)">delete</el-button>
+          @click="handleDelete(scope.row.email)">delete</el-button>
       </template>
       </el-table-column>
     </el-table>
-    <el-button type="primary" icon="el-icon-edit" circle style="margin-top:30px;" @click="dialogFormVisible1 = true"></el-button>
-    
-
     <el-dialog title="Employee Detail" :visible.sync="dialogFormVisible">
         <el-form :model="detail">
             <el-form-item label="Email" :label-width="formLabelWidth">
@@ -108,19 +105,19 @@
             </el-form-item>
 
             <el-form-item label="Edu Background" :label-width="formLabelWidth">
-            <el-input v-model="detail.edu_background" ></el-input>
+            <el-input v-model="detail.eduBackground" ></el-input>
             </el-form-item>
 
             <el-form-item label="Work Experience" :label-width="formLabelWidth">
-            <el-input v-model="detail.work_experience" ></el-input>
+            <el-input v-model="detail.workExperience" ></el-input>
             </el-form-item>
 
             <el-form-item label="Expect Salary" :label-width="formLabelWidth">
-            <el-input v-model="detail.expect_salary" ></el-input>
+            <el-input v-model="detail.expectSalary" ></el-input>
             </el-form-item>
 
             <el-form-item label="Expect City" :label-width="formLabelWidth">
-            <el-input v-model="detail.expect_city" ></el-input>
+            <el-input v-model="detail.expectCity" ></el-input>
             </el-form-item>
 
            <el-form-item label="Address" :label-width="formLabelWidth">
@@ -136,64 +133,11 @@
             </el-form-item>
         </el-form>
     </el-dialog>
-     <el-dialog title="New Employee" :visible.sync="dialogFormVisible1">
-        <el-form :model="newEmployee">
-            <el-form-item label="Email" :label-width="formLabelWidth">
-            <el-input v-model="newEmployee.email" ></el-input>
-            </el-form-item>
-
-            <el-form-item label="Name" :label-width="formLabelWidth">
-            <el-input v-model="newEmployee.name"></el-input>
-            </el-form-item>
-
-            <el-form-item label="Phone" :label-width="formLabelWidth">
-            <el-input v-model="newEmployee.phone" ></el-input>
-            </el-form-item>
-
-             <el-form-item label="Birthday" :label-width="formLabelWidth">
-            <el-date-picker type="date" v-model="newEmployee.birthday" ></el-date-picker>
-            </el-form-item>
-
-             <el-form-item label="Gender" :label-width="formLabelWidth">
-            <el-input v-model="newEmployee.gender" ></el-input>
-            </el-form-item>
-
-            <el-form-item label="Edu Background" :label-width="formLabelWidth">
-            <el-input v-model="newEmployee.edu_background" ></el-input>
-            </el-form-item>
-
-            <el-form-item label="Work Experience" :label-width="formLabelWidth">
-            <el-input v-model="newEmployee.work_experience" ></el-input>
-            </el-form-item>
-
-            <el-form-item label="Expect Salary" :label-width="formLabelWidth">
-            <el-input v-model="newEmployee.expect_salary" ></el-input>
-            </el-form-item>
-
-            <el-form-item label="Expect City" :label-width="formLabelWidth">
-            <el-input v-model="newEmployee.expect_city" ></el-input>
-            </el-form-item>
-
-           <el-form-item label="Address" :label-width="formLabelWidth">
-            <el-input type="textarea" v-model="newEmployee.address" ></el-input>
-            </el-form-item>
-
-            <el-form-item label="Description" :label-width="formLabelWidth">
-            <el-input type="textarea" v-model="newEmployee.description" ></el-input>
-            </el-form-item>
-
-             <el-form-item :label-width="formLabelWidth">
-              <el-button type="primary" @click="handleNew()">create</el-button>
-            </el-form-item>
-        </el-form>
-    </el-dialog>
-
-
   </div>
 </template>
 
 <script>
-import { getEmployeeList } from '@/api/admin'
+import { getEmployeeList, saveEmployee, deleteEmployee } from '@/api/admin'
 
 export default {
   data() {
@@ -210,23 +154,10 @@ export default {
         phone: '',
         birthday: '',
         gender: '',
-        edu_background: '',
-        work_experience: '',
-        expect_salary: '',
-        expect_city: '',
-        address: '',
-        description: ''
-      },
-      newEmployee: {
-        email: '',
-        name: '',
-        phone: '',
-        birthday: '',
-        gender: '',
-        edu_background: '',
-        work_experience: '',
-        expect_salary: '',
-        expect_city: '',
+        eduBackground: '',
+        workExperience: '',
+        expectSalary: '',
+        expectCity: '',
         address: '',
         description: ''
       }
@@ -255,18 +186,20 @@ export default {
     fetchData() {
       this.listLoading = true
       getEmployeeList().then(response => {
-        this.list = response.data.items
+        this.list = response.data
         this.listLoading = false
       })
     },
     handleSave() {
-
+      saveEmployee(this.detail).then(response => {
+        this.dialogFormVisible = false
+        this.fetchData()
+      })
     },
-    handleDelete() {
-
-    },
-    handleNew() {
-
+    handleDelete(email) {
+      deleteEmployee(email).then(response => {
+        this.fetchData()
+      })
     }
   }
 }
