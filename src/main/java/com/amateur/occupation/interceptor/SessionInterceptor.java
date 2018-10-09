@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
-
 @Slf4j
 public class SessionInterceptor implements HandlerInterceptor {
     @Value("${occupation.runtime}")
@@ -24,7 +23,8 @@ public class SessionInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) {
         HttpSession session = httpServletRequest.getSession();
         if (!runtime) {
-            log.debug("debug mode test user: " + email);
+            log.debug("debug mode test email: " + (String) session.getAttribute(Const.ID_KEY)
+                    + " user_type:" + session.getAttribute(Const.USER_TYPE_KEY));
             if (session.getAttribute(Const.ID_KEY) == null) {
                 session.setAttribute(Const.ID_KEY, Const.TEST_EMAIL);
             }
@@ -32,7 +32,9 @@ public class SessionInterceptor implements HandlerInterceptor {
                 session.setAttribute(Const.USER_TYPE_KEY, Const.TEST_USER_TYPE);
             }
         }
-        return session != null && session.getAttribute(Const.ID_KEY) != null;
+        boolean result = (session != null && session.getAttribute(Const.ID_KEY) != null);
+        log.debug("interceptor preHandle:" + result);
+        return result;
     }
 
     @Override

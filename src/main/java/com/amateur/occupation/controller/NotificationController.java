@@ -5,6 +5,7 @@ import com.amateur.occupation.entity.Notification;
 import com.amateur.occupation.service.NotificationService;
 import com.amateur.occupation.util.TResult;
 import com.amateur.occupation.util.TResultCode;
+import com.amateur.occupation.util.TimeUtil;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,7 @@ public class NotificationController {
     @PostMapping
     public TResult add(@RequestBody Notification notification) {
         if (((int) session.getAttribute(Const.USER_TYPE_KEY)) == 0) {
+            notification.setCreateTime(TimeUtil.getCurrentTime());
             System.out.println(notification.getContent());
             System.out.println(notification.getCreateTime());
             System.out.println(notification.getCrtEmail());
@@ -39,7 +41,6 @@ public class NotificationController {
                 return TResult.success("insert notification success,noteId:" + notification.getNoteId());
             } else {
                 return TResult.failure(TResultCode.BUSINESS_ERROR);
-
             }
         } else {
             return TResult.failure(TResultCode.PERMISSION_NO_ACCESS);
@@ -59,6 +60,7 @@ public class NotificationController {
 
     /**
      * to be tested
+     *
      * @return
      */
     @GetMapping("/list")
@@ -87,6 +89,5 @@ public class NotificationController {
         } else {
             return TResult.failure(TResultCode.PERMISSION_NO_ACCESS);
         }
-
     }
 }

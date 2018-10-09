@@ -24,7 +24,7 @@
       <el-form-item prop="gender" style="background: transparent;border: 0px">
         <el-radio-group v-model="registerForm.gender" style="width:450px">
           <el-radio label="male" border style="width:220px;border: 1px solid rgba(255, 255, 255, 0.1);background: rgba(0, 0, 0, 0.1);color:#dddddd"></el-radio>
-          <el-radio label="famle" border style="width:220px;border: 1px solid rgba(255, 255, 255, 0.1);background: rgba(0, 0, 0, 0.1);color:#dddddd"></el-radio>
+          <el-radio label="female" border style="width:220px;border: 1px solid rgba(255, 255, 255, 0.1);background: rgba(0, 0, 0, 0.1);color:#dddddd"></el-radio>
         </el-radio-group>
       </el-form-item>
 

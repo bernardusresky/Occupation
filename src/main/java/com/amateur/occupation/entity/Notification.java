@@ -3,9 +3,7 @@ package com.amateur.occupation.entity;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -13,8 +11,6 @@ import java.io.Serializable;
 
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @XmlAccessorType
 @XmlRootElement
 @TableName("notification")
@@ -42,4 +38,21 @@ public class Notification implements Serializable {
      */
     private String createTime;
 
+    public Notification() {
+    }
+
+    public Notification(int noteId, String content, String targetEmail, String crtEmail) {
+        this.noteId = noteId;
+        this.content = content;
+        this.targetEmail = targetEmail;
+        this.crtEmail = crtEmail;
+    }
+
+    public Notification(int noteId, String content, String targetEmail, String crtEmail, String createTime) {
+        this.noteId = noteId;
+        this.content = content;
+        this.targetEmail = targetEmail;
+        this.crtEmail = crtEmail;
+        this.createTime = createTime;
+    }
 }

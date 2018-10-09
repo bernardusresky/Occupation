@@ -54,6 +54,7 @@ public class JobServiceImpl extends ServiceImpl<JobMapper, Job> implements JobSe
         return jobVOList;
     }
 
+
     @Override
     public List<JobVO> searchJob(String content) {
         List<JobVO> jobVOList = new ArrayList<>();

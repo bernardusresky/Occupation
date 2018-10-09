@@ -34,18 +34,10 @@
 </template>
 
 <script>
-// import { isvalidemail } from '@/utils/validate'
 
 export default {
   name: 'login',
   data() {
-    // const validateemail = (rule, value, callback) => {
-    //   if (!isvalidemail(value)) {
-    //     callback(new Error('please enter the correct email'))
-    //   } else {
-    //     callback()
-    //   }
-    // }
     const validatePass = (rule, value, callback) => {
       if (value.length < 5) {
         callback(new Error('password cannot be less than five'))

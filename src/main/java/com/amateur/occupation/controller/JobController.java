@@ -5,6 +5,7 @@ import com.amateur.occupation.entity.Job;
 import com.amateur.occupation.service.JobService;
 import com.amateur.occupation.util.TResult;
 import com.amateur.occupation.util.TResultCode;
+import com.amateur.occupation.util.TimeUtil;
 import com.amateur.occupation.vo.JobVO;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +34,7 @@ public class JobController {
     @PostMapping
     public TResult add(@RequestBody Job job) {
         if (((int) session.getAttribute(Const.USER_TYPE_KEY)) == 1) {
+            job.setCreateTime(TimeUtil.getCurrentTime());
             boolean result = jobService.insert(job);
             if (result) {
                 return TResult.success("insert Job success,jobId:" + job.getJobId());
