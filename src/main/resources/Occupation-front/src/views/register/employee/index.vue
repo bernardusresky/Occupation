@@ -62,7 +62,6 @@ export default {
         re_password: ''
       },
       loginRules: {
-        // name: [{ required: true, trigger: 'blur', validator: validatename }],
         password: [{ required: true, trigger: 'blur', validator: validatePass }],
         re_password: [{ required: true, trigger: 'blur', validator: validatePass }]
       },
