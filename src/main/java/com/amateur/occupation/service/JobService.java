@@ -11,4 +11,6 @@ public interface JobService extends IService<Job> {
     List<JobVO> getAllJob();
 
     List<JobVO> searchJob(String content);
+
+
 }

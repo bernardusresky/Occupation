@@ -45,7 +45,7 @@ public class UserController {
         String password = (String) map.get("password");
         TResult result = userService.login(email, password);
         if (result.getCode() == TResultCode.SUCCESS.getCode()) {
-            log.info("set session attribute id:" + result.getMessage());
+            log.info("set session attribute id:" + result.getMessage() + " user:" + result.getData());
             User user = (User) result.getData();
             if (user.getIsForbidden() == 1) {
                 return TResult.failure(TResultCode.PERMISSION_NO_ACCESS);
