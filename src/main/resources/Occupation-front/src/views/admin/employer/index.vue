@@ -155,6 +155,9 @@ export default {
       deleteEmployer(email).then(response => {
         this.fetchData()
       })
+    },
+    ban() {
+
     }
   }
 }

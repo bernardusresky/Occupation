@@ -121,7 +121,6 @@ public class UserController {
             case 1:
                 result = employerService.get(email);
                 Employer employer = (Employer) result.getData();
-                System.out.println(result.getData());
                 employer.setUserType(userType);
                 result.setData(employer);
                 break;

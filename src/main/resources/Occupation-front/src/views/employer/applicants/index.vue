@@ -78,15 +78,11 @@
         <el-button
           size="mini"
           type="success"
-          @click="accept()">accept</el-button>
+          @click="offer()">offer</el-button>
         <el-button
           size="mini"
           type="danger"
-          @click="reject()">reject</el-button>
-        <el-button
-          size="mini"
-          type="danger"
-          @click="ban()">ban</el-button>
+          @click="reportEmployee(scope.row.email)">report</el-button>
       </template>
       </el-table-column>
     </el-table>
@@ -142,7 +138,7 @@
 </template>
 
 <script>
-import { getApplicants } from '@/api/employer'
+import { getApplicants, report } from '@/api/employer'
 
 export default {
   data() {
@@ -197,13 +193,12 @@ export default {
         this.listLoading = false
       })
     },
-    accept() {
+    reportEmployee(email) {
+      report(email).then(response => {
 
+      })
     },
-    reject() {
-
-    },
-    ban() {
+    offer() {
 
     }
   }

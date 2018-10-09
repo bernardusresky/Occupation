@@ -65,8 +65,12 @@
           @click="dialogFormVisible = true, detail = scope.row">detail</el-button>
         <el-button
           size="mini"
+          type="success"
+          @click="apply()">apply</el-button>
+        <el-button
+          size="mini"
           type="danger"
-          @click="handleDelete(scope.$index, scope.row)">apply</el-button>
+          @click="reportEmployer(scope.row.employer.email)">report</el-button>
       </template>
       </el-table-column>
     </el-table>
@@ -141,7 +145,7 @@
 </template>
 
 <script>
-import { getRecommendJobList } from '@/api/employee'
+import { getRecommendJobList, report } from '@/api/employee'
 
 export default {
   data() {
@@ -208,6 +212,14 @@ export default {
         this.list = response.data.items
         this.listLoading = false
       })
+    },
+    reportEmployer(email) {
+      report(email).then(response => {
+
+      })
+    },
+    apply() {
+
     }
   }
 }

@@ -21,40 +21,40 @@
         </template>
       </el-table-column>
 
-       <el-table-column label="Birthday" width="115" prop="Birthday" sortable>
+       <el-table-column label="Birthday" width="120" prop="Birthday" sortable>
         <template slot-scope="scope">
           <i class="el-icon-time"></i>
           <span>{{scope.row.birthday}}</span>
         </template>
       </el-table-column>
 
-       <el-table-column label="Gender" width="95" prop="Gender" sortable>
+       <el-table-column label="Gender" width="100" prop="Gender" sortable>
         <template slot-scope="scope">
           {{scope.row.gender}}
         </template>
       </el-table-column>
 
-      <el-table-column label="Edu Background" width="160" align="center" sortable>
+      <el-table-column label="Edu Background" width="170" align="center" sortable>
         <template slot-scope="scope">
-          {{scope.row.eduBackground}}
+          {{scope.row.edu_background}}
         </template>
       </el-table-column>
 
-      <el-table-column label="Work Experience" width="160" align="center" sortable>
+      <el-table-column label="Work Experience" width="170" align="center" sortable>
         <template slot-scope="scope">
-          {{scope.row.workExperience}}
+          {{scope.row.work_experience}}
         </template>
       </el-table-column>
 
        <el-table-column label="Expect Salary" width="80" align="center">
         <template slot-scope="scope">
-          {{scope.row.expectSalary}}
+          {{scope.row.expect_salary}}
         </template>
       </el-table-column>
 
        <el-table-column label="Expect City" width="80" align="center">
         <template slot-scope="scope">
-          {{scope.row.expectCity}}
+          {{scope.row.expect_city}}
         </template>
       </el-table-column>
 
@@ -70,18 +70,27 @@
         </template>
       </el-table-column>
 
-       <el-table-column label="Operation" width="200" align="center">
+       <el-table-column label="Operation" width="320" align="center">
         <template slot-scope="scope">
         <el-button
           size="mini"
-          @click="dialogFormVisible = true, detail = scope.row">modify</el-button>
+          @click="dialogFormVisible = true, detail = scope.row">detail</el-button>
+        <el-button
+          size="mini"
+          type="success"
+          @click="accept()">accept</el-button>
         <el-button
           size="mini"
           type="danger"
-          @click="handleDelete(scope.row.email)">delete</el-button>
+          @click="reject()">reject</el-button>
+        <el-button
+          size="mini"
+          type="danger"
+          @click="ban()">ban</el-button>
       </template>
       </el-table-column>
     </el-table>
+
     <el-dialog title="Employee Detail" :visible.sync="dialogFormVisible">
         <el-form :model="detail">
             <el-form-item label="Email" :label-width="formLabelWidth">
@@ -105,19 +114,19 @@
             </el-form-item>
 
             <el-form-item label="Edu Background" :label-width="formLabelWidth">
-            <el-input v-model="detail.eduBackground" ></el-input>
+            <el-input v-model="detail.edu_background" ></el-input>
             </el-form-item>
 
             <el-form-item label="Work Experience" :label-width="formLabelWidth">
-            <el-input v-model="detail.workExperience" ></el-input>
+            <el-input v-model="detail.work_experience" ></el-input>
             </el-form-item>
 
             <el-form-item label="Expect Salary" :label-width="formLabelWidth">
-            <el-input v-model="detail.expectSalary" ></el-input>
+            <el-input v-model="detail.expect_salary" ></el-input>
             </el-form-item>
 
             <el-form-item label="Expect City" :label-width="formLabelWidth">
-            <el-input v-model="detail.expectCity" ></el-input>
+            <el-input v-model="detail.expect_city" ></el-input>
             </el-form-item>
 
            <el-form-item label="Address" :label-width="formLabelWidth">
@@ -127,17 +136,13 @@
             <el-form-item label="Description" :label-width="formLabelWidth">
             <el-input type="textarea" v-model="detail.description" ></el-input>
             </el-form-item>
-
-             <el-form-item :label-width="formLabelWidth">
-              <el-button type="primary" @click="handleSave()">save</el-button>
-            </el-form-item>
         </el-form>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { getEmployeeList, saveEmployee, deleteEmployee } from '@/api/admin'
+import { getApplicants } from '@/api/employer'
 
 export default {
   data() {
@@ -154,12 +159,14 @@ export default {
         phone: '',
         birthday: '',
         gender: '',
-        eduBackground: '',
-        workExperience: '',
-        expectSalary: '',
-        expectCity: '',
+        edu_background: '',
+        work_experience: '',
+        expect_salary: '',
+        expect_city: '',
         address: '',
         description: ''
+        // job: {
+        // }
       }
     }
   },
@@ -185,23 +192,16 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      getEmployeeList().then(response => {
+      getApplicants().then(response => {
         this.list = response.data
         this.listLoading = false
       })
     },
-    handleSave() {
-      saveEmployee(this.detail).then(response => {
-        this.dialogFormVisible = false
-        this.fetchData()
-      })
+    report() {
+
     },
-    handleDelete(email) {
-      deleteEmployee(email).then(response => {
-        this.fetchData()
-      })
-    },
-    ban() {
+    sendOffer() {
+
     }
   }
 }

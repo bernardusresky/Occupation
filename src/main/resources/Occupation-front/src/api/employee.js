@@ -41,3 +41,9 @@ export function newNotification(newNotification) {
     }
   })
 }
+export function report(email) {
+  return request({
+    url: '/user/report/' + email,
+    method: 'put'
+  })
+}
