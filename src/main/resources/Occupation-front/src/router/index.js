@@ -54,6 +54,7 @@ export const asyncRouterMap = [
   {
     path: '/job',
     component: Layout,
+    meta: { userType: 2 },
     children: [
       {
         path: 'index',
@@ -66,6 +67,7 @@ export const asyncRouterMap = [
   {
     path: '/offer',
     component: Layout,
+    meta: { userType: 2 },
     children: [
       {
         path: 'index',
@@ -77,6 +79,7 @@ export const asyncRouterMap = [
   },
   {
     path: '/ee_profile',
+    meta: { userType: 2 },
     component: Layout,
     children: [
       {
@@ -90,6 +93,7 @@ export const asyncRouterMap = [
   {
     path: '/ee_notification',
     component: Layout,
+    meta: { userType: 2 },
     children: [
       {
         path: 'index',
@@ -102,6 +106,7 @@ export const asyncRouterMap = [
   {
     path: '/myjob',
     component: Layout,
+    meta: { userType: 1 },
     children: [
       {
         path: 'index',
@@ -114,6 +119,7 @@ export const asyncRouterMap = [
   {
     path: '/applicants',
     component: Layout,
+    meta: { userType: 1 },
     children: [
       {
         path: 'index',
@@ -126,6 +132,7 @@ export const asyncRouterMap = [
   {
     path: '/er_profile',
     component: Layout,
+    meta: { userType: 1 },
     children: [
       {
         path: 'index',
@@ -138,6 +145,7 @@ export const asyncRouterMap = [
   {
     path: '/er_notification',
     component: Layout,
+    meta: { userType: 1 },
     children: [
       {
         path: 'index',
@@ -150,6 +158,7 @@ export const asyncRouterMap = [
   {
     path: '/ad_employee',
     component: Layout,
+    meta: { userType: 0 },
     children: [
       {
         path: 'index',
@@ -162,6 +171,7 @@ export const asyncRouterMap = [
   {
     path: '/ad_employer',
     component: Layout,
+    meta: { userType: 0 },
     children: [
       {
         path: 'index',
@@ -174,6 +184,7 @@ export const asyncRouterMap = [
   {
     path: '/ad_notification',
     component: Layout,
+    meta: { userType: 0 },
     children: [
       {
         path: 'index',

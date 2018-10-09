@@ -1,57 +1,60 @@
 import request from '@/utils/request'
-
+import store from '../store'
 export function getEmployeeList() {
   return request({
-    url: '/employee/list',
+    url: '/user/employee_list',
     method: 'get'
   })
 }
-export function saveEmployee() {
+export function saveEmployee(detail) {
   return request({
-    url: '/employee/save',
-    method: 'post'
+    url: '/employee',
+    method: 'put',
+    data: detail
   })
 }
-export function deleteEmployee() {
+export function deleteEmployee(email) {
   return request({
-    url: '/employee/delete',
-    method: 'post'
-  })
-}
-export function addEmployee() {
-  return request({
-    url: '/employee/add',
-    method: 'post'
+    url: '/employee/' + email,
+    method: 'delete'
   })
 }
 export function getEmployerList() {
   return request({
-    url: '/employer/list',
+    url: '/user/employer_list',
     method: 'get'
   })
 }
-export function saveEmployer() {
+export function saveEmployer(detail) {
   return request({
-    url: '/employer/save',
-    method: 'post'
+    url: '/employer',
+    method: 'put',
+    data: detail
   })
 }
-export function deleteEmployer() {
+export function deleteEmployer(email) {
   return request({
-    url: '/employer/delete',
-    method: 'post'
+    url: '/employer/' + email,
+    method: 'delete'
   })
 }
-export function addEmployer() {
+export function getNotification() {
   return request({
-    url: '/employer/add',
-    method: 'post'
+    url: '/notification/list',
+    method: 'get'
+  })
+}
+export function newNotification(newNotification) {
+  return request({
+    url: '/notification',
+    method: 'post',
+    data: {
+      noteId: 0,
+      content: newNotification.content,
+      targetEmail: newNotification.to,
+      crtEmail: store.getters.token,
+      createTime: ''
+    }
   })
 }
 
-export function getNotification() {
-  return request({
-    url: '/admin/notification',
-    method: 'get'
-  })
-}

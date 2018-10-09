@@ -36,7 +36,7 @@
 
       <div class="tips">
         <span style="margin-right:170px;"><a class="link" href="#/login">Already have</a></span>
-        <span><a class="link" href="#/register/admin">register as admin </a></span>       
+        <span><a class="link" href="#/register/admin">Register as admin </a></span>       
         <span><a class="link" href="#/register/employee">or employee</a></span>
       </div>
 
@@ -45,20 +45,12 @@
 </template>
 
 <script>
-// import { isvalidname } from '@/utils/validate'
 export default {
   name: 'register',
   data() {
-    // const validatename = (rule, value, callback) => {
-    //   if (!isvalidname(value)) {
-    //     callback(new Error('请输入正确的用户名'))
-    //   } else {
-    //     callback()
-    //   }
-    // }
     const validatePass = (rule, value, callback) => {
       if (value.length < 5) {
-        callback(new Error('password cannot be less than five'))
+        callback(new Error('Password cannot be less than five'))
       } else {
         callback()
       }
@@ -87,20 +79,6 @@ export default {
       }
     },
     next() {
-      // this.$refs.registerForm.validate(valid => {
-      //   if (valid) {
-      //     this.loading = true
-      //     this.$store.dispatch('RegisterByEmployer', this.registerForm).then(() => {
-      //       this.loading = false
-      //       this.$router.push({ path: '/' })
-      //     }).catch(() => {
-      //       this.loading = false
-      //     })
-      //   } else {
-      //     console.log('error submit!!')
-      //     return false
-      //   }
-      // })
       this.$store.commit('SET_RE', this.registerForm.email)
       this.$store.commit('SET_RP', this.registerForm.password)
       this.$router.push('/register/employer/next')

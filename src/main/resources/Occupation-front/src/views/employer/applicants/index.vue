@@ -165,8 +165,6 @@ export default {
         expect_city: '',
         address: '',
         description: ''
-        // job: {
-        // }
       }
     }
   },

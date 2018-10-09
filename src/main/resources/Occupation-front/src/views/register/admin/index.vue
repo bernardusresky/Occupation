@@ -43,21 +43,13 @@
 </template>
 
 <script>
-// import { isvalidemail } from '@/utils/validate'
 
 export default {
   name: 'register',
   data() {
-    // const validateemail = (rule, value, callback) => {
-    //   if (!isvalidemail(value)) {
-    //     callback(new Error('请输入正确的用户名'))
-    //   } else {
-    //     callback()
-    //   }
-    // }
     const validatePass = (rule, value, callback) => {
       if (value.length < 5) {
-        callback(new Error('password cannot be less than five'))
+        callback(new Error('Password cannot be less than five'))
       } else {
         callback()
       }

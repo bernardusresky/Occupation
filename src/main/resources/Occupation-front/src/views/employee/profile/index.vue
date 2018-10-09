@@ -22,19 +22,19 @@
           </el-form-item>
 
           <el-form-item label="Edu Background" :label-width="formLabelWidth">
-          <el-input v-model="detail.edu_background" ></el-input>
+          <el-input v-model="detail.eduBackground" ></el-input>
           </el-form-item>
 
           <el-form-item label="Work Experience" :label-width="formLabelWidth">
-          <el-input v-model="detail.work_experience" ></el-input>
+          <el-input v-model="detail.workExperience" ></el-input>
           </el-form-item>
 
           <el-form-item label="Expect Salary" :label-width="formLabelWidth">
-          <el-input v-model="detail.expect_salary" ></el-input>
+          <el-input v-model="detail.expectSalary" ></el-input>
           </el-form-item>
 
           <el-form-item label="Expect City" :label-width="formLabelWidth">
-          <el-input v-model="detail.expect_city" ></el-input>
+          <el-input v-model="detail.expectCity" ></el-input>
           </el-form-item>
 
           <el-form-item label="Address" :label-width="formLabelWidth">
@@ -53,12 +53,11 @@
 </template>
 
 <script>
-import { getProfile } from '@/api/employee'
+import { getProfile, modifyProfile } from '@/api/employee'
 
 export default {
   data() {
     return {
-      profileLoading: true,
       formLabelWidth: '160px',
       detail: {
         email: '',
@@ -66,10 +65,10 @@ export default {
         phone: '',
         birthday: '',
         gender: '',
-        edu_background: '',
-        work_experience: '',
-        expect_salary: '',
-        expect_city: '',
+        eduBackground: '',
+        workExperience: '',
+        expectSalary: '',
+        expectCity: '',
         address: '',
         description: ''
       }
@@ -80,14 +79,14 @@ export default {
   },
   methods: {
     fetchData() {
-      this.profileLoading = true
       getProfile().then(response => {
         this.detail = response.data
-        this.profileLoading = false
       })
     },
     handleSave() {
-
+      modifyProfile(this.detail).then(response => {
+        this.fetchData()
+      })
     }
   }
 }
