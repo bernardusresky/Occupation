@@ -54,7 +54,7 @@
 
       <el-table-column label="Status" width="90" align="center" prop="Status" sortable>
          <template slot-scope="scope">
-          <el-tag :type="scope.row.status | statusFilter">{{scope.row.status}}</el-tag>
+          <el-tag :type="scope.row.status | statusFilter">{{scope.row.status == 0 ? 'valid': 'invalid'}}</el-tag>
         </template>
       </el-table-column>
 
@@ -66,7 +66,7 @@
         <el-button
           size="mini"
           type="success"
-          @click="apply()">apply</el-button>
+          @click="handApply(scope.row.jobId, scope.row.employer.email)">apply</el-button>
         <el-button
           size="mini"
           type="danger"
@@ -136,10 +136,6 @@
             <el-form-item label="Employer scale" :label-width="formLabelwidth">
             <el-input v-model="detail.employer.scale" :disabled="true"></el-input>
             </el-form-item>
-
-            <el-form-item label="Employer reportedNum" :label-width="formLabelwidth">
-            <el-input-number v-model="detail.employer.reportedNum" :disabled="true"></el-input-number>
-            </el-form-item>
         </el-form>
     </el-dialog>
 
@@ -148,7 +144,7 @@
 </template>
 
 <script>
-import { getRecommendJobList, report } from '@/api/employee'
+import { getRecommendJobList, report, apply } from '@/api/employee'
 
 export default {
   data() {
@@ -185,8 +181,8 @@ export default {
   filters: {
     statusFilter(status) {
       const statusMap = {
-        valjobId: 'success',
-        invaljobId: 'danger'
+        0: 'success',
+        1: 'danger'
       }
       return statusMap[status]
     }
@@ -223,8 +219,10 @@ export default {
         this.fetchData()
       })
     },
-    apply() {
-
+    handApply(jobId, ere) {
+      apply(jobId, ere).then(response => {
+        this.fetchData()
+      })
     }
   }
 }

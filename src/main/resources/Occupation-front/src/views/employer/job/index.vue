@@ -54,7 +54,7 @@
 
       <el-table-column label="Status" width="90" align="center" prop="Status" sortable>
          <template slot-scope="scope">
-          <el-tag :type="scope.row.status | statusFilter">{{scope.row.status}}</el-tag>
+          <el-tag :type="scope.row.status | statusFilter">{{scope.row.status == 0 ? 'valid': 'invalid'}}</el-tag>
         </template>
       </el-table-column>
 
@@ -193,8 +193,8 @@ export default {
   filters: {
     statusFilter(status) {
       const statusMap = {
-        valid: 'success',
-        invalid: 'danger'
+        0: 'success',
+        1: 'danger'
       }
       return statusMap[status]
     }

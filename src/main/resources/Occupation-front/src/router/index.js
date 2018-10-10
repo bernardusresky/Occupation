@@ -65,15 +65,15 @@ export const asyncRouterMap = [
     ]
   },
   {
-    path: '/offer',
+    path: '/ee_interaction',
     component: Layout,
     meta: { userType: 2 },
     children: [
       {
         path: 'index',
-        name: 'Offer',
-        component: () => import('@/views/employee/offer/index'),
-        meta: { title: 'Offer', icon: 'table', userType: 2 }
+        name: 'Notification',
+        component: () => import('@/views/employee/interaction/index'),
+        meta: { title: 'Interaction', icon: 'table', userType: 2 }
       }
     ]
   },
@@ -126,6 +126,19 @@ export const asyncRouterMap = [
         name: 'Applicants',
         component: () => import('@/views/employer/applicants/index'),
         meta: { title: 'Applicants', icon: 'form', userType: 1 }
+      }
+    ]
+  },
+  {
+    path: '/er_interaction',
+    component: Layout,
+    meta: { userType: 1 },
+    children: [
+      {
+        path: 'index',
+        name: 'Interaction',
+        component: () => import('@/views/employer/interaction/index'),
+        meta: { title: 'Interaction', icon: 'form', userType: 1 }
       }
     ]
   },

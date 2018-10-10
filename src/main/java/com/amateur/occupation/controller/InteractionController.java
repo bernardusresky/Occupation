@@ -7,6 +7,7 @@ import com.amateur.occupation.service.InteractionService;
 import com.amateur.occupation.service.NotificationService;
 import com.amateur.occupation.util.TResult;
 import com.amateur.occupation.util.TResultCode;
+import com.amateur.occupation.util.TimeUtil;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ public class InteractionController {
     @PostMapping
     public TResult add(@RequestBody Interaction interaction) {
         if (((int) session.getAttribute(Const.USER_TYPE_KEY)) > 0) {
+            interaction.setCreateTime(TimeUtil.getCurrentTime());
             boolean result = interactionService.insert(interaction);
             String email = (String) session.getAttribute(Const.ID_KEY);
             if (result) {
