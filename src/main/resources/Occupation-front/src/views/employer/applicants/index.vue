@@ -36,25 +36,25 @@
 
       <el-table-column label="Edu Background" width="170" align="center" sortable>
         <template slot-scope="scope">
-          {{scope.row.edu_background}}
+          {{scope.row.eduBackground}}
         </template>
       </el-table-column>
 
       <el-table-column label="Work Experience" width="170" align="center" sortable>
         <template slot-scope="scope">
-          {{scope.row.work_experience}}
+          {{scope.row.workExperience}}
         </template>
       </el-table-column>
 
        <el-table-column label="Expect Salary" width="80" align="center">
         <template slot-scope="scope">
-          {{scope.row.expect_salary}}
+          {{scope.row.expectSalary}}
         </template>
       </el-table-column>
 
        <el-table-column label="Expect City" width="80" align="center">
         <template slot-scope="scope">
-          {{scope.row.expect_city}}
+          {{scope.row.expectCity}}
         </template>
       </el-table-column>
 
@@ -70,7 +70,7 @@
         </template>
       </el-table-column>
 
-       <el-table-column label="Operation" width="320" align="center">
+       <el-table-column label="Operation" width="260" align="center">
         <template slot-scope="scope">
         <el-button
           size="mini"
@@ -78,15 +78,11 @@
         <el-button
           size="mini"
           type="success"
-          @click="accept()">accept</el-button>
+          @click="offer()">offer</el-button>
         <el-button
           size="mini"
           type="danger"
-          @click="reject()">reject</el-button>
-        <el-button
-          size="mini"
-          type="danger"
-          @click="ban()">ban</el-button>
+          @click="reportEmployee(scope.row.email)">report</el-button>
       </template>
       </el-table-column>
     </el-table>
@@ -94,47 +90,47 @@
     <el-dialog title="Employee Detail" :visible.sync="dialogFormVisible">
         <el-form :model="detail">
             <el-form-item label="Email" :label-width="formLabelWidth">
-            <el-input v-model="detail.email" ></el-input>
+            <el-input v-model="detail.email" :disabled="true"></el-input>
             </el-form-item>
 
             <el-form-item label="Name" :label-width="formLabelWidth">
-            <el-input v-model="detail.name"></el-input>
+            <el-input v-model="detail.name" :disabled="true"></el-input>
             </el-form-item>
 
             <el-form-item label="Phone" :label-width="formLabelWidth">
-            <el-input v-model="detail.phone" ></el-input>
+            <el-input v-model="detail.phone" :disabled="true"></el-input>
             </el-form-item>
 
              <el-form-item label="Birthday" :label-width="formLabelWidth">
-            <el-date-picker type="date" v-model="detail.birthday" ></el-date-picker>
+            <el-date-picker type="date" v-model="detail.birthday" :disabled="true"></el-date-picker>
             </el-form-item>
 
              <el-form-item label="Gender" :label-width="formLabelWidth">
-            <el-input v-model="detail.gender" ></el-input>
+            <el-input v-model="detail.gender" :disabled="true"></el-input>
             </el-form-item>
 
             <el-form-item label="Edu Background" :label-width="formLabelWidth">
-            <el-input v-model="detail.edu_background" ></el-input>
+            <el-input v-model="detail.eduBackground" :disabled="true"></el-input>
             </el-form-item>
 
             <el-form-item label="Work Experience" :label-width="formLabelWidth">
-            <el-input v-model="detail.work_experience" ></el-input>
+            <el-input v-model="detail.workExperience" :disabled="true"></el-input>
             </el-form-item>
 
             <el-form-item label="Expect Salary" :label-width="formLabelWidth">
-            <el-input v-model="detail.expect_salary" ></el-input>
+            <el-input v-model="detail.expectSalary" :disabled="true"></el-input>
             </el-form-item>
 
             <el-form-item label="Expect City" :label-width="formLabelWidth">
-            <el-input v-model="detail.expect_city" ></el-input>
+            <el-input v-model="detail.expectCity" :disabled="true"></el-input>
             </el-form-item>
 
            <el-form-item label="Address" :label-width="formLabelWidth">
-            <el-input type="textarea" v-model="detail.address" ></el-input>
+            <el-input type="textarea" v-model="detail.address" :disabled="true"></el-input>
             </el-form-item>
 
             <el-form-item label="Description" :label-width="formLabelWidth">
-            <el-input type="textarea" v-model="detail.description" ></el-input>
+            <el-input type="textarea" v-model="detail.description" :disabled="true"></el-input>
             </el-form-item>
         </el-form>
     </el-dialog>
@@ -142,7 +138,7 @@
 </template>
 
 <script>
-import { getApplicants } from '@/api/employer'
+import { getApplicants, report } from '@/api/employer'
 
 export default {
   data() {
@@ -159,10 +155,10 @@ export default {
         phone: '',
         birthday: '',
         gender: '',
-        edu_background: '',
-        work_experience: '',
-        expect_salary: '',
-        expect_city: '',
+        eduBackground: '',
+        workExperience: '',
+        expectSalary: '',
+        expectCity: '',
         address: '',
         description: ''
       }
@@ -195,13 +191,12 @@ export default {
         this.listLoading = false
       })
     },
-    accept() {
-
+    reportEmployee(email) {
+      report(email).then(response => {
+        this.fetchData()
+      })
     },
-    reject() {
-
-    },
-    ban() {
+    offer() {
 
     }
   }

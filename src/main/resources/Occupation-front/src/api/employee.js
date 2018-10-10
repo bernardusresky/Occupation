@@ -2,7 +2,7 @@ import request from '@/utils/request'
 import store from '../store'
 export function getRecommendJobList() {
   return request({
-    url: '/employee/job/list',
+    url: '/job/list',
     method: 'get'
   })
 }
@@ -39,5 +39,11 @@ export function newNotification(newNotification) {
       crtEmail: store.getters.token,
       createTime: ''
     }
+  })
+}
+export function report(email) {
+  return request({
+    url: '/user/report/' + email,
+    method: 'put'
   })
 }

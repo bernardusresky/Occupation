@@ -30,7 +30,7 @@ public class JobController {
         this.session = session;
     }
 
-
+    
     @PostMapping
     public TResult add(@RequestBody Job job) {
         if (((int) session.getAttribute(Const.USER_TYPE_KEY)) == 1) {

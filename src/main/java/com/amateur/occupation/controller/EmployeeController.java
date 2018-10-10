@@ -27,7 +27,7 @@ public class EmployeeController {
         this.employeeService = employeeService;
         this.session = session;
     }
-
+    
     @PostMapping
     public TResult add(@RequestBody Employee employee) {
         log.debug(employee.toString());

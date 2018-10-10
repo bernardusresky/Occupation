@@ -57,4 +57,18 @@ export function newNotification(newNotification) {
     }
   })
 }
+export function banEmployee(detail) {
+  return request({
+    url: '/employee',
+    method: 'put',
+    data: detail
+  })
+}
+export function banEmployer(detail) {
+  return request({
+    url: '/employer',
+    method: 'put',
+    data: detail
+  })
+}
 

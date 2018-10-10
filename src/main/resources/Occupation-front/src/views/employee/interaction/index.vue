@@ -15,13 +15,50 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="Phone" width="90" prop="Phone">
+      <el-table-column label="Phone" width="110" prop="Phone">
         <template slot-scope="scope">
           {{scope.row.phone}}
         </template>
       </el-table-column>
 
-      <el-table-column label="Address" width="90">
+       <el-table-column label="Birthday" width="120" prop="Birthday" sortable>
+        <template slot-scope="scope">
+          <i class="el-icon-time"></i>
+          <span>{{scope.row.birthday}}</span>
+        </template>
+      </el-table-column>
+
+       <el-table-column label="Gender" width="100" prop="Gender" sortable>
+        <template slot-scope="scope">
+          {{scope.row.gender}}
+        </template>
+      </el-table-column>
+
+      <el-table-column label="Edu Background" width="170" align="center" sortable>
+        <template slot-scope="scope">
+          {{scope.row.edu_background}}
+        </template>
+      </el-table-column>
+
+      <el-table-column label="Work Experience" width="170" align="center" sortable>
+        <template slot-scope="scope">
+          {{scope.row.work_experience}}
+        </template>
+      </el-table-column>
+
+       <el-table-column label="Expect Salary" width="80" align="center">
+        <template slot-scope="scope">
+          {{scope.row.expect_salary}}
+        </template>
+      </el-table-column>
+
+       <el-table-column label="Expect City" width="80" align="center">
+        <template slot-scope="scope">
+          {{scope.row.expect_city}}
+        </template>
+      </el-table-column>
+
+      <el-table-column label="Address">
         <template slot-scope="scope">
           {{scope.row.address}}
         </template>
@@ -33,41 +70,27 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="Domain" width="90">
-        <template slot-scope="scope">
-          {{scope.row.domain}}
-        </template>
-      </el-table-column>
-
-      <el-table-column label="Scale" width="90">
-        <template slot-scope="scope">
-          {{scope.row.scale}}
-        </template>
-      </el-table-column>
-
-      <el-table-column label="ReportedNum" width="90">
-        <template slot-scope="scope">
-          {{scope.row.reportedNum}}
-        </template>
-      </el-table-column>
-
-
-       <el-table-column label="Operation" width="250" align="center">
+       <el-table-column label="Operation" width="320" align="center">
         <template slot-scope="scope">
         <el-button
           size="mini"
-          @click="dialogFormVisible = true, detail = scope.row">modify</el-button>
+          @click="dialogFormVisible = true, detail = scope.row">detail</el-button>
+        <el-button
+          size="mini"
+          type="success"
+          @click="accept()">accept</el-button>
         <el-button
           size="mini"
           type="danger"
-          @click="handleDelete(scope.row.email)">delete</el-button>
-           <el-button
+          @click="reject()">reject</el-button>
+        <el-button
           size="mini"
           type="danger"
-          @click="ban(scope.row.email)">ban</el-button>
+          @click="ban()">ban</el-button>
       </template>
       </el-table-column>
     </el-table>
+
     <el-dialog title="Employee Detail" :visible.sync="dialogFormVisible">
         <el-form :model="detail">
             <el-form-item label="Email" :label-width="formLabelWidth">
@@ -82,6 +105,30 @@
             <el-input v-model="detail.phone" ></el-input>
             </el-form-item>
 
+             <el-form-item label="Birthday" :label-width="formLabelWidth">
+            <el-date-picker type="date" v-model="detail.birthday" ></el-date-picker>
+            </el-form-item>
+
+             <el-form-item label="Gender" :label-width="formLabelWidth">
+            <el-input v-model="detail.gender" ></el-input>
+            </el-form-item>
+
+            <el-form-item label="Edu Background" :label-width="formLabelWidth">
+            <el-input v-model="detail.edu_background" ></el-input>
+            </el-form-item>
+
+            <el-form-item label="Work Experience" :label-width="formLabelWidth">
+            <el-input v-model="detail.work_experience" ></el-input>
+            </el-form-item>
+
+            <el-form-item label="Expect Salary" :label-width="formLabelWidth">
+            <el-input v-model="detail.expect_salary" ></el-input>
+            </el-form-item>
+
+            <el-form-item label="Expect City" :label-width="formLabelWidth">
+            <el-input v-model="detail.expect_city" ></el-input>
+            </el-form-item>
+
            <el-form-item label="Address" :label-width="formLabelWidth">
             <el-input type="textarea" v-model="detail.address" ></el-input>
             </el-form-item>
@@ -89,30 +136,13 @@
             <el-form-item label="Description" :label-width="formLabelWidth">
             <el-input type="textarea" v-model="detail.description" ></el-input>
             </el-form-item>
-
-             <el-form-item label="Domain" :label-width="formLabelWidth">
-            <el-input type="textarea" v-model="detail.domain" ></el-input>
-            </el-form-item>
-
-            <el-form-item label="Scale" :label-width="formLabelWidth">
-            <el-input type="textarea" v-model="detail.scale" ></el-input>
-            </el-form-item>
-
-            <el-form-item label="ReportedNum" :label-width="formLabelWidth">
-            <el-input-number v-model="detail.reportedNum"></el-input-number>
-            </el-form-item>
-
-
-             <el-form-item :label-width="formLabelWidth">
-              <el-button type="primary" @click="handleSave()">save</el-button>
-            </el-form-item>
         </el-form>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { getEmployerList, saveEmployer, deleteEmployer, banEmployer } from '@/api/admin'
+import { getApplicants } from '@/api/employer'
 
 export default {
   data() {
@@ -127,12 +157,16 @@ export default {
         email: '',
         name: '',
         phone: '',
+        birthday: '',
+        gender: '',
+        edu_background: '',
+        work_experience: '',
+        expect_salary: '',
+        expect_city: '',
         address: '',
-        description: '',
-        domain: '',
-        scale: '',
-        isForbidden: false,
-        reportedNum: 0
+        description: ''
+        // job: {
+        // }
       }
     }
   },
@@ -158,27 +192,16 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      getEmployerList().then(response => {
+      getApplicants().then(response => {
         this.list = response.data
         this.listLoading = false
       })
     },
-    handleSave() {
-      saveEmployer(this.detail).then(response => {
-        this.dialogFormVisible = false
-        this.fetchData()
-      })
+    report() {
+
     },
-    handleDelete(email) {
-      deleteEmployer(email).then(response => {
-        this.fetchData()
-      })
-    },
-    ban(detail) {
-      detail.isForbidden = true
-      banEmployer(detail).then(response => {
-        this.fetchData()
-      })
+    sendOffer() {
+
     }
   }
 }

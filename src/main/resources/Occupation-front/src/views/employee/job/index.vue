@@ -3,39 +3,39 @@
     <el-input placeholder="Search" v-model="filterText" style="margin-bottom:30px;"></el-input>
     <el-table :data="filteredList" v-loading="listLoading" element-loading-text="Loading" border fit highlight-current-row>
 
-      <el-table-column align="center" label='ID' width="95" prop="ID" sortable>
+      <el-table-column align="center" label='jobId' width="90" prop="jobId" sortable>
         <template slot-scope="scope">
-          {{scope.row.id}}
+          {{scope.row.jobId}}
         </template>
       </el-table-column>
 
-      <el-table-column label="Number" width="110" align="center" prop="Number" sortable>
+      <el-table-column label="Number" width="90" align="center" prop="Number" sortable>
         <template slot-scope="scope">
           {{scope.row.number}}
         </template>
       </el-table-column>
 
-      <el-table-column label="Salary" width="110" prop="Salary" sortable>
+      <el-table-column label="Salary" width="90" prop="Salary" sortable>
         <template slot-scope="scope">
           {{scope.row.salary}}
         </template>
       </el-table-column>
 
-      <el-table-column label="Work Experience" width="150" align="center">
+      <el-table-column label="Work Experience" width="90" align="center">
         <template slot-scope="scope">
-          {{scope.row.expect_work_experience}}
+          {{scope.row.expectWorkExperience}}
         </template>
       </el-table-column>
 
-      <el-table-column label="Edu Background" width="150" align="center">
+      <el-table-column label="Edu Background" width="90" align="center">
         <template slot-scope="scope">
-          {{scope.row.expect_edu_background}}
+          {{scope.row.expectEduBackground}}
         </template>
       </el-table-column>
 
       <el-table-column label="Requirement">
         <template slot-scope="scope">
-          {{scope.row.requirement}}
+          {{scope.row.jobRequirement}}
         </template>
       </el-table-column>
 
@@ -45,93 +45,100 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="Create Time" width="200" align="center" prop="Create Time" sortable>
+      <el-table-column label="Create Time" width="110" align="center" prop="Create Time" sortable>
          <template slot-scope="scope">
           <i class="el-icon-time"></i>
-          <span>{{scope.row.create_time}}</span>
+          <span>{{scope.row.createTime}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="Status" width="110" align="center" prop="Status" sortable>
+      <el-table-column label="Status" width="90" align="center" prop="Status" sortable>
          <template slot-scope="scope">
           <el-tag :type="scope.row.status | statusFilter">{{scope.row.status}}</el-tag>
         </template>
       </el-table-column>
 
-       <el-table-column label="Operation" width="200" align="center">
+       <el-table-column label="Operation" width="260" align="center">
         <template slot-scope="scope">
         <el-button
           size="mini"
           @click="dialogFormVisible = true, detail = scope.row">detail</el-button>
         <el-button
           size="mini"
+          type="success"
+          @click="apply()">apply</el-button>
+        <el-button
+          size="mini"
           type="danger"
-          @click="handleDelete(scope.$index, scope.row)">apply</el-button>
+          @click="reportEmployer(scope.row.employer.email)">report</el-button>
       </template>
       </el-table-column>
     </el-table>
 
     <el-dialog title="Job Detail" :visible.sync="dialogFormVisible">
         <el-form :model="detail">
-            <el-form-item label="ID" :label-width="formLabelWidth">
-            <el-input-number v-model="detail.id" :disabled="true"></el-input-number>
+            <el-form-item label="jobId" :label-width="formLabelwidth">
+            <el-input-number v-model="detail.jobId" :disabled="true"></el-input-number>
             </el-form-item>
 
-            <el-form-item label="Number" :label-width="formLabelWidth">
+            <el-form-item label="Number" :label-width="formLabelwidth">
             <el-input-number v-model="detail.number" :disabled="true"></el-input-number>
             </el-form-item>
 
-            <el-form-item label="Salary" :label-width="formLabelWidth">
-            <el-input-number v-model="detail.salary" :disabled="true"></el-input-number>
+            <el-form-item label="Salary" :label-width="formLabelwidth">
+            <el-input v-model="detail.salary" :disabled="true"></el-input>
             </el-form-item>
 
-            <el-form-item label="Work Experience" :label-width="formLabelWidth">
-            <el-input v-model="detail.expect_work_experience" :disabled="true"></el-input>
+            <el-form-item label="Work Experience" :label-width="formLabelwidth">
+            <el-input v-model="detail.expectWorkExperience" :disabled="true"></el-input>
             </el-form-item>
 
-            <el-form-item label="Edu Background" :label-width="formLabelWidth">
-            <el-input v-model="detail.expect_edu_background" :disabled="true"></el-input>
+            <el-form-item label="Edu Background" :label-width="formLabelwidth">
+            <el-input v-model="detail.expectEduBackground" :disabled="true"></el-input>
             </el-form-item>
 
-            <el-form-item label="Requirement" :label-width="formLabelWidth">
-            <el-input type="textarea" v-model="detail.requirement" :disabled="true"></el-input>
+            <el-form-item label="jobRequirement" :label-width="formLabelwidth">
+            <el-input type="textarea" v-model="detail.jobRequirement" :disabled="true"></el-input>
             </el-form-item>
 
-            <el-form-item label="Description" :label-width="formLabelWidth">
+            <el-form-item label="Description" :label-width="formLabelwidth">
             <el-input type="textarea" v-model="detail.description" :disabled="true"></el-input>
             </el-form-item>
 
-            <el-form-item label="Create Time" :label-width="formLabelWidth">
-            <!-- <el-input v-model="detail.create_time" auto-complete="off"></el-input> -->
-            <el-date-picker type="datetime" v-model="detail.create_time" :disabled="true"></el-date-picker>
+            <el-form-item label="Create Time" :label-width="formLabelwidth">
+            <el-date-picker type="datetime" v-model="detail.createTime" :disabled="true"></el-date-picker>
             </el-form-item>
 
-            <el-form-item label="Employer email" :label-width="formLabelWidth">
+            <el-form-item label="Employer email" :label-width="formLabelwidth">
             <el-input v-model="detail.employer.email" :disabled="true"></el-input>
             </el-form-item>
 
-            <el-form-item label="Employer name" :label-width="formLabelWidth">
+            <el-form-item label="Employer name" :label-width="formLabelwidth">
             <el-input v-model="detail.employer.name" :disabled="true"></el-input>
             </el-form-item>
 
-            <el-form-item label="Employer phone" :label-width="formLabelWidth">
+            <el-form-item label="Employer phone" :label-width="formLabelwidth">
             <el-input v-model="detail.employer.phone" :disabled="true"></el-input>
             </el-form-item>
 
-            <el-form-item label="Employer address" :label-width="formLabelWidth">
+            <el-form-item label="Employer address" :label-width="formLabelwidth">
             <el-input v-model="detail.employer.address" :disabled="true"></el-input>
             </el-form-item>
 
-            <el-form-item type="textarea" label="Employer description" :label-width="formLabelWidth">
+            <el-form-item type="textarea" label="Employer description" :label-width="formLabelwidth">
             <el-input v-model="detail.employer.description" :disabled="true"></el-input>
             </el-form-item>
 
-             <el-form-item label="Employer domain" :label-width="formLabelWidth">
+             <el-form-item label="Employer domain" :label-width="formLabelwidth">
             <el-input v-model="detail.employer.domain" :disabled="true"></el-input>
             </el-form-item>
 
-            <el-form-item label="Employer scale" :label-width="formLabelWidth">
+            <el-form-item label="Employer scale" :label-width="formLabelwidth">
             <el-input v-model="detail.employer.scale" :disabled="true"></el-input>
+            </el-form-item>
+
+            <el-form-item label="Employer reportedNum" :label-width="formLabelwidth">
+            <el-input-number v-model="detail.employer.reportedNum" :disabled="true"></el-input-number>
             </el-form-item>
         </el-form>
     </el-dialog>
@@ -141,7 +148,7 @@
 </template>
 
 <script>
-import { getRecommendJobList } from '@/api/employee'
+import { getRecommendJobList, report } from '@/api/employee'
 
 export default {
   data() {
@@ -150,16 +157,16 @@ export default {
       list: null,
       listLoading: true,
       dialogFormVisible: false,
-      formLabelWidth: '160px',
+      formLabelwidth: '160px',
       detail: {
-        id: '',
+        jobId: '',
         number: '',
         salary: '',
-        expect_work_experience: '',
-        expect_edu_background: '',
-        requirement: '',
+        expectWorkExperience: '',
+        expectEduBackground: '',
+        jobRequirement: '',
         description: '',
-        create_time: '',
+        createTime: '',
         status: '',
         employer: {
           email: '',
@@ -168,7 +175,9 @@ export default {
           address: '',
           description: '',
           domain: '',
-          scale: ''
+          scale: '',
+          isForbidden: false,
+          reportedNum: 0
         }
       }
     }
@@ -176,8 +185,8 @@ export default {
   filters: {
     statusFilter(status) {
       const statusMap = {
-        valid: 'success',
-        invalid: 'danger'
+        valjobId: 'success',
+        invaljobId: 'danger'
       }
       return statusMap[status]
     }
@@ -194,7 +203,7 @@ export default {
       }
       filterText = filterText.trim().toLowerCase()
       filteredList = filteredList.filter(function(item) {
-        if (item.description.toLowerCase().indexOf(filterText) !== -1 || item.requirement.toLowerCase().indexOf(filterText) !== -1) {
+        if (item.description.toLowerCase().indexOf(filterText) !== -1 || item.jobRequirement.toLowerCase().indexOf(filterText) !== -1) {
           return item
         }
       })
@@ -205,9 +214,17 @@ export default {
     fetchData() {
       this.listLoading = true
       getRecommendJobList().then(response => {
-        this.list = response.data.items
+        this.list = response.data
         this.listLoading = false
       })
+    },
+    reportEmployer(email) {
+      report(email).then(response => {
+        this.fetchData()
+      })
+    },
+    apply() {
+
     }
   }
 }

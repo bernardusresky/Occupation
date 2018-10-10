@@ -2,8 +2,42 @@ import request from '@/utils/request'
 import store from '../store'
 export function getMyJobList() {
   return request({
-    url: '/employer/job/list',
+    url: '/job/list',
     method: 'get'
+  })
+}
+
+export function modifyJob(job) {
+  return request({
+    url: '/job',
+    method: 'put',
+    data: {
+      jobId: job.jobId,
+      number: job.number,
+      salary: job.salary,
+      expectWorkExperience: job.expectWorkExperience,
+      expectEduBackground: job.expectEduBackground,
+      jobRequirement: job.jobRequirement,
+      description: job.description,
+      createTime: job.createTime,
+      status: job.status,
+      createEmployerEmail: job.employer.email
+    }
+  })
+}
+
+export function deleteJob(jobId) {
+  return request({
+    url: '/job/' + jobId,
+    method: 'delete'
+  })
+}
+
+export function newJob(job) {
+  return request({
+    url: '/job',
+    method: 'post',
+    data: job
   })
 }
 
@@ -44,7 +78,14 @@ export function newNotification(newNotification) {
 
 export function getApplicants() {
   return request({
-    url: '/employer/applicants',
+    url: '/user/employee_list',
     method: 'get'
+  })
+}
+
+export function report(email) {
+  return request({
+    url: '/user/report/' + email,
+    method: 'put'
   })
 }
