@@ -15,13 +15,13 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="Phone" width="110" prop="Phone">
+      <el-table-column label="Phone" width="90" prop="Phone">
         <template slot-scope="scope">
           {{scope.row.phone}}
         </template>
       </el-table-column>
 
-      <el-table-column label="Address">
+      <el-table-column label="Address" width="90">
         <template slot-scope="scope">
           {{scope.row.address}}
         </template>
@@ -33,19 +33,26 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="Domain">
+      <el-table-column label="Domain" width="90">
         <template slot-scope="scope">
           {{scope.row.domain}}
         </template>
       </el-table-column>
 
-      <el-table-column label="Scale">
+      <el-table-column label="Scale" width="90">
         <template slot-scope="scope">
           {{scope.row.scale}}
         </template>
       </el-table-column>
 
-       <el-table-column label="Operation" width="200" align="center">
+      <el-table-column label="ReportedNum" width="90">
+        <template slot-scope="scope">
+          {{scope.row.reportedNum}}
+        </template>
+      </el-table-column>
+
+
+       <el-table-column label="Operation" width="250" align="center">
         <template slot-scope="scope">
         <el-button
           size="mini"
@@ -54,6 +61,10 @@
           size="mini"
           type="danger"
           @click="handleDelete(scope.row.email)">delete</el-button>
+           <el-button
+          size="mini"
+          type="danger"
+          @click="ban(scope.row.email)">ban</el-button>
       </template>
       </el-table-column>
     </el-table>
@@ -87,6 +98,11 @@
             <el-input type="textarea" v-model="detail.scale" ></el-input>
             </el-form-item>
 
+            <el-form-item label="ReportedNum" :label-width="formLabelWidth">
+            <el-input-number v-model="detail.reportedNum"></el-input-number>
+            </el-form-item>
+
+
              <el-form-item :label-width="formLabelWidth">
               <el-button type="primary" @click="handleSave()">save</el-button>
             </el-form-item>
@@ -96,7 +112,7 @@
 </template>
 
 <script>
-import { getEmployerList, saveEmployer, deleteEmployer } from '@/api/admin'
+import { getEmployerList, saveEmployer, deleteEmployer, banEmployer } from '@/api/admin'
 
 export default {
   data() {
@@ -114,7 +130,9 @@ export default {
         address: '',
         description: '',
         domain: '',
-        scale: ''
+        scale: '',
+        isForbidden: false,
+        reportedNum: 0
       }
     }
   },
@@ -156,8 +174,11 @@ export default {
         this.fetchData()
       })
     },
-    ban() {
-
+    ban(detail) {
+      detail.isForbidden = true
+      banEmployer(detail).then(response => {
+        this.fetchData()
+      })
     }
   }
 }

@@ -31,11 +31,6 @@ public class NotificationController {
     public TResult add(@RequestBody Notification notification) {
         if (((int) session.getAttribute(Const.USER_TYPE_KEY)) == 0) {
             notification.setCreateTime(TimeUtil.getCurrentTime());
-            System.out.println(notification.getContent());
-            System.out.println(notification.getCreateTime());
-            System.out.println(notification.getCrtEmail());
-            System.out.println(notification.getNoteId());
-            System.out.println(notification.getTargetEmail());
             boolean result = notificationService.insert(notification);
             if (result) {
                 return TResult.success("insert notification success,noteId:" + notification.getNoteId());

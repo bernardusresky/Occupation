@@ -77,7 +77,7 @@ public class UserController {
 
     @GetMapping("/employee_list")
     public TResult employeeList() {
-        if ((int) session.getAttribute(Const.USER_TYPE_KEY) == 0) {
+        if ((int) session.getAttribute(Const.USER_TYPE_KEY) == 0 || (int) session.getAttribute(Const.USER_TYPE_KEY) == 1) {
             List<Employee> employeeList = employeeService.list();
             if (employeeList == null) {
                 return TResult.failure(TResultCode.BUSINESS_ERROR);

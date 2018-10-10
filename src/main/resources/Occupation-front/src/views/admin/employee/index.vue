@@ -15,32 +15,32 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="Phone" width="110" prop="Phone">
+      <el-table-column label="Phone" width="100" prop="Phone">
         <template slot-scope="scope">
           {{scope.row.phone}}
         </template>
       </el-table-column>
 
-       <el-table-column label="Birthday" width="115" prop="Birthday" sortable>
+       <el-table-column label="Birthday" width="80" prop="Birthday" sortable>
         <template slot-scope="scope">
           <i class="el-icon-time"></i>
           <span>{{scope.row.birthday}}</span>
         </template>
       </el-table-column>
 
-       <el-table-column label="Gender" width="95" prop="Gender" sortable>
+       <el-table-column label="Gender" width="80" prop="Gender" sortable>
         <template slot-scope="scope">
           {{scope.row.gender}}
         </template>
       </el-table-column>
 
-      <el-table-column label="Edu Background" width="160" align="center" sortable>
+      <el-table-column label="Edu Background" width="90" align="center" sortable>
         <template slot-scope="scope">
           {{scope.row.eduBackground}}
         </template>
       </el-table-column>
 
-      <el-table-column label="Work Experience" width="160" align="center" sortable>
+      <el-table-column label="Work Experience" width="90" align="center" sortable>
         <template slot-scope="scope">
           {{scope.row.workExperience}}
         </template>
@@ -58,7 +58,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="Address">
+      <el-table-column label="Address" width="80">
         <template slot-scope="scope">
           {{scope.row.address}}
         </template>
@@ -70,7 +70,13 @@
         </template>
       </el-table-column>
 
-       <el-table-column label="Operation" width="200" align="center">
+      <el-table-column label="ReportedNum" width="90">
+        <template slot-scope="scope">
+          {{scope.row.reportedNum}}
+        </template>
+      </el-table-column>
+
+       <el-table-column label="Operation" width="250" align="center">
         <template slot-scope="scope">
         <el-button
           size="mini"
@@ -79,6 +85,10 @@
           size="mini"
           type="danger"
           @click="handleDelete(scope.row.email)">delete</el-button>
+        <el-button
+          size="mini"
+          type="danger"
+          @click="ban(scope.row)">ban</el-button>
       </template>
       </el-table-column>
     </el-table>
@@ -128,6 +138,11 @@
             <el-input type="textarea" v-model="detail.description" ></el-input>
             </el-form-item>
 
+            <el-form-item label="ReportedNum" :label-width="formLabelWidth">
+            <el-input-number v-model="detail.reportedNum"></el-input-number>
+            </el-form-item>
+            
+
              <el-form-item :label-width="formLabelWidth">
               <el-button type="primary" @click="handleSave()">save</el-button>
             </el-form-item>
@@ -137,7 +152,7 @@
 </template>
 
 <script>
-import { getEmployeeList, saveEmployee, deleteEmployee } from '@/api/admin'
+import { getEmployeeList, saveEmployee, deleteEmployee, banEmployee } from '@/api/admin'
 
 export default {
   data() {
@@ -159,7 +174,9 @@ export default {
         expectSalary: '',
         expectCity: '',
         address: '',
-        description: ''
+        description: '',
+        isForbidden: false,
+        reportedNum: 0
       }
     }
   },
@@ -201,7 +218,11 @@ export default {
         this.fetchData()
       })
     },
-    ban() {
+    ban(detail) {
+      detail.isForbidden = true
+      banEmployee(detail).then(response => {
+        this.fetchData()
+      })
     }
   }
 }
