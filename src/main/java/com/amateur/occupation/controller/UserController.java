@@ -119,14 +119,12 @@ public class UserController {
                 result = TResult.success(new User(email, "******", userType));
                 break;
             case 1:
-                result = employerService.get(email);
-                Employer employer = (Employer) result.getData();
+                Employer employer = employerService.getEmployer(email);
                 employer.setUserType(userType);
                 result.setData(employer);
                 break;
             case 2:
-                result = employeeService.get(email);
-                Employee employee = (Employee) result.getData();
+                Employee employee = employeeService.getEmployee(email);
                 employee.setUserType(userType);
                 result.setData(employee);
                 break;
