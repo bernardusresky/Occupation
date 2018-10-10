@@ -85,4 +85,31 @@ public class EmployerServiceImpl extends ServiceImpl<EmployerMapper, Employer> i
         }
         return employerList;
     }
+
+    @Override
+    public Employer getEmployer(String email) {
+        List<Map<Integer, Object>> list = employerMapper.getEmployer(email);
+        Employer employer = null;
+        if (list != null && list.size() > 0) {
+            for (Map<Integer, Object> map : list) {
+                if (map != null) {
+                    String email1 = (String) map.get("email");
+                    String name = (String) map.get("name");
+                    String phone = (String) map.get("phone");
+                    String address = (String) map.get("address");
+                    String description = (String) map.get("description");
+                    String domain = (String) map.get("domain");
+                    String scale = (String) map.get("scale");
+                    String password = (String) map.get("password");
+                    int userType = (int) map.get("user_type");
+                    int isForbidden = (int) map.get("is_forbidden");
+                    int reportedNum = (int) map.get("reported_num");
+                    employer = new Employer(email1, name, phone, address, description, domain, scale,
+                            password, userType, isForbidden, reportedNum);
+
+                }
+            }
+        }
+        return employer;
+    }
 }

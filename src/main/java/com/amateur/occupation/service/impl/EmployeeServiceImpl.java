@@ -104,4 +104,47 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
         }
         return employeeList;
     }
+
+    @Override
+    public Employee getEmployee(String email) {
+        Employee employee = new Employee();
+        List<Map<Integer, Object>> list = employeeMapper.getEmployee(email);
+        if (list != null && list.size() > 0) {
+            for (Map<Integer, Object> map : list) {
+                if (map != null) {
+                    String email1 = (String) map.get("email");
+                    employee.setEmail(email1);
+                    String name = (String) map.get("name");
+                    employee.setName(name);
+                    String phone = (String) map.get("phone");
+                    employee.setPhone(phone);
+                    String birthday = (String) map.get("birthday");
+                    employee.setBirthday(birthday);
+                    int gender = (int) map.get("gender");
+                    employee.setGender(gender);
+                    String eduBackground = (String) map.get("edu_background");
+                    employee.setEduBackground(eduBackground);
+                    String workExperience = (String) map.get("work_experience");
+                    employee.setWorkExperience(workExperience);
+                    String expectSalary = (String) map.get("expect_salary");
+                    employee.setExpectSalary(expectSalary);
+                    String expectCity = (String) map.get("expect_city");
+                    employee.setExpectCity(expectCity);
+                    String address = (String) map.get("address");
+                    employee.setAddress(address);
+                    String description = (String) map.get("description");
+                    employee.setDescription(description);
+                    String password = (String) map.get("password");
+                    employee.setPassword(password);
+                    int userType = (int) map.get("user_type");
+                    employee.setUserType(userType);
+                    int isForbidden = (int) map.get("is_forbidden");
+                    employee.setIsForbidden(isForbidden);
+                    int reportedNum = (int) map.get("reported_num");
+                    employee.setReportedNum(reportedNum);
+                }
+            }
+        }
+        return employee;
+    }
 }

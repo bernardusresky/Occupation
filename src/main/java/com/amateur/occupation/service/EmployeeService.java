@@ -13,4 +13,6 @@ public interface EmployeeService extends IService<Employee> {
     TResult get(String email);
 
     List<Employee> list();
+
+    Employee getEmployee(String email);
 }
