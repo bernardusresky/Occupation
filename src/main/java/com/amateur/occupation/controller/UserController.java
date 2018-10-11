@@ -151,6 +151,17 @@ public class UserController {
         }
     }
 
+    @PutMapping("/forbidden/{email}/{isForbidden}")
+    public TResult forbidden(@PathVariable("email") String email, @PathVariable("isForbidden") int isForbidden) {
+        EntityWrapper<User> ew = new EntityWrapper<>();
+        boolean result = userService.updateForSet("  is_forbidden=" + isForbidden, ew.eq("email", email));
+        if (result) {
+            return TResult.success("update user isForbidden to " + isForbidden);
+        } else {
+            return TResult.failure(TResultCode.BUSINESS_ERROR);
+        }
+    }
+
     @PostMapping("/logout")
     public TResult logout() {
         session.setAttribute(Const.ID_KEY, null);
