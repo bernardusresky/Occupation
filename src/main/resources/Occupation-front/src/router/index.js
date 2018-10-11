@@ -10,14 +10,14 @@ Vue.use(Router)
 import Layout from '../views/layout/Layout'
 
 /**
-* hidden: true                   if `hidden:true` will not show in the sidebar(default is false)
-* alwaysShow: true               if set true, will always show the root menu, whatever its child routes length
-*                                if not set alwaysShow, only more than one route under the children
-*                                it will becomes nested mode, otherwise not show the root menu
-* redirect: noredirect           if `redirect:noredirect` will no redirct in the breadcrumb
-* name:'router-name'             the name is used by <keep-alive> (must set!!!)
+* hidden: true                   if `hidden:true` will not show in the sidebar(default is false),
+* alwaysShow: true               if set true, will always show the root menu, whatever its child routes length,
+*                                if not set alwaysShow, only more than one route under the children,
+*                                it will becomes nested mode, otherwise not show the root menu,
+* redirect: noredirect           if `redirect:noredirect` will no redirct in the breadcrumb,
+* name:'router-name'             the name is used by <keep-alive> (must set!!!),
 * meta : {
-    title: 'title'               the name show in submenu and breadcrumb (recommend set)
+    title: 'title'               the name show in submenu and breadcrumb (recommend set),
     icon: 'svg-name'             the icon show in the sidebar,
   }
 **/
@@ -106,13 +106,13 @@ export const asyncRouterMap = [
   {
     path: '/myjob',
     component: Layout,
-    meta: { userType: 1 },
+    meta: { userType: 1 }, 
     children: [
       {
         path: 'index',
         name: 'Job',
         component: () => import('@/views/employer/job/index'),
-        meta: { title: 'Job', icon: 'form', userType: 1 }
+        meta: { title: 'Job', icon: 'form', userType: 1 } 
       }
     ]
   },
@@ -125,33 +125,33 @@ export const asyncRouterMap = [
         path: 'index',
         name: 'Applicants',
         component: () => import('@/views/employer/applicants/index'),
-        meta: { title: 'Applicants', icon: 'form', userType: 1 }
+        meta: { title: 'Applicants', icon: 'form', userType: 1 } 
       }
     ]
   },
   {
     path: '/er_interaction',
     component: Layout,
-    meta: { userType: 1 },
+    meta: { userType: 1 }, 
     children: [
       {
         path: 'index',
         name: 'Interaction',
         component: () => import('@/views/employer/interaction/index'),
-        meta: { title: 'Interaction', icon: 'form', userType: 1 }
+        meta: { title: 'Interaction', icon: 'form', userType: 1 } 
       }
     ]
   },
   {
     path: '/er_profile',
     component: Layout,
-    meta: { userType: 1 },
+    meta: { userType: 1 }, 
     children: [
       {
         path: 'index',
         name: 'Profile',
         component: () => import('@/views/employer/profile/index'),
-        meta: { title: 'Profile', icon: 'form', userType: 1 }
+        meta: { title: 'Profile', icon: 'form', userType: 1 } 
       }
     ]
   },
@@ -164,7 +164,7 @@ export const asyncRouterMap = [
         path: 'index',
         name: 'Notification',
         component: () => import('@/views/employer/notification/index'),
-        meta: { title: 'Notification', icon: 'form', userType: 1 }
+        meta: { title: 'Notification', icon: 'form', userType: 1 } 
       }
     ]
   },
@@ -176,8 +176,8 @@ export const asyncRouterMap = [
       {
         path: 'index',
         name: 'Employee',
-        component: () => import('@/views/admin/employee/index'),
-        meta: { title: 'Employee', icon: 'tree', userType: 0 }
+        component: () => import('@/views/admin/employee/index'), 
+        meta: { title: 'Employee', icon: 'tree', userType: 0 } 
       }
     ]
   },
@@ -189,8 +189,8 @@ export const asyncRouterMap = [
       {
         path: 'index',
         name: 'Employer',
-        component: () => import('@/views/admin/employer/index'),
-        meta: { title: 'Employer', icon: 'tree', userType: 0 }
+        component: () => import('@/views/admin/employer/index'), 
+        meta: { title: 'Employer', icon: 'tree', userType: 0 } 
       }
     ]
   },
@@ -202,10 +202,10 @@ export const asyncRouterMap = [
       {
         path: 'index',
         name: 'Notification',
-        component: () => import('@/views/admin/notification/index'),
-        meta: { title: 'Notification', icon: 'tree', userType: 0 }
+        component: () => import('@/views/admin/notification/index'), 
+        meta: { title: 'Notification', icon: 'tree', userType: 0 } 
       }
     ]
   },
-  { path: '*', redirect: '/404', hidden: true }
+  { path: '*', redirect: '/404', hidden: true } 
 ]
