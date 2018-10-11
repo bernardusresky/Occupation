@@ -1,5 +1,4 @@
 package com.amateur.occupation.controller;
-
 import com.amateur.occupation.constant.Const;
 import com.amateur.occupation.entity.Employer;
 import com.amateur.occupation.service.EmployerService;
@@ -12,9 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpSession;
-
 
 @RestController
 @RequestMapping("/employer")
@@ -28,15 +25,14 @@ public class EmployerController {
         this.employerService = employerService;
         this.session = session;
     }
-
-
+    
     @PostMapping
     public TResult add(@RequestBody Employer employer) {
         log.debug(employer.toString());
         session.setAttribute(employer.getEmail(), employer);
         JSONObject jsonObject = new JSONObject(employer);
         EmailUtil.sendAdd(employer.getEmail(), Const.EMPLOYER_URL, jsonObject.toString());
-        return TResult.success("verify email send success!");
+        return TResult.success("Verify email send success");
     }
 
     @GetMapping("/add")
@@ -67,7 +63,7 @@ public class EmployerController {
                     "  window.location='http://" + host + ":9000' \n" +
                     "</script>" +
                     "<body>\n" +
-                    "<h1>add employer success!</h1>\n" +
+                    "<h1>Add employer success!</h1>\n" +
                     "</body>\n" +
                     "</html>";
         } else {
@@ -78,7 +74,7 @@ public class EmployerController {
                     "    <title>Occupation</title>\n" +
                     "</head>\n" +
                     "<body>\n" +
-                    "<h1>add employer fail!</h1>\n" +
+                    "<h1>Add employer fail!</h1>\n" +
                     "</body>\n" +
                     "</html>";
         }
