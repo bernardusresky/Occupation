@@ -57,18 +57,16 @@ export function newNotification(newNotification) {
     }
   })
 }
-export function banEmployee(detail) {
+export function banEmployee(email) {
   return request({
-    url: '/employee',
-    method: 'put',
-    data: detail
+    url: '/user/forbidden/' + email + '/1',
+    method: 'put'
   })
 }
-export function banEmployer(detail) {
+export function banEmployer(email) {
   return request({
-    url: '/employer',
-    method: 'put',
-    data: detail
+    url: '/user/forbidden/' + email + '/1',
+    method: 'put'
   })
 }
 
