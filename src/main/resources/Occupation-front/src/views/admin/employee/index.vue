@@ -88,7 +88,7 @@
         <el-button
           size="mini"
           type="danger"
-          @click="ban(scope.row)">ban</el-button>
+          @click="ban(scope.row.email)">ban</el-button>
       </template>
       </el-table-column>
     </el-table>
@@ -218,9 +218,8 @@ export default {
         this.fetchData()
       })
     },
-    ban(detail) {
-      detail.isForbidden = 1
-      banEmployee(detail).then(response => {
+    ban(email) {
+      banEmployee(email).then(response => {
         this.fetchData()
       })
     }

@@ -99,10 +99,6 @@ public class JobController {
     @GetMapping("/list")
     public TResult getAll() {
         List<JobVO> jobVOList = jobService.getAllJob();
-        JobVO jobVO = jobVOList.get(0);
-        System.out.println("------"+jobVO.getEmployer().getReportedNum());
-        System.out.println("------"+jobVO.getEmployer().getIsForbidden());
-        System.out.println("------"+jobVO.getEmployer().getPassword());
         if (jobVOList == null || jobVOList.size() == 0) {
             return TResult.failure(TResultCode.RESULE_DATA_NONE);
         } else {

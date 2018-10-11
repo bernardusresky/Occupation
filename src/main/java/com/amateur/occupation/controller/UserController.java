@@ -113,7 +113,7 @@ public class UserController {
             return TResult.failure(TResultCode.USER_NOT_LOGGED_IN);
         }
         int userType = (Integer) session.getAttribute(Const.USER_TYPE_KEY);
-        TResult result = TResult.failure(TResultCode.BUSINESS_ERROR);
+        TResult result = TResult.success();
         switch (userType) {
             case 0:
                 result = TResult.success(new User(email, "******", userType));
