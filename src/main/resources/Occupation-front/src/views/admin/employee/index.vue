@@ -175,7 +175,7 @@ export default {
         expectCity: '',
         address: '',
         description: '',
-        isForbidden: false,
+        isForbidden: 0,
         reportedNum: 0
       }
     }
@@ -219,7 +219,7 @@ export default {
       })
     },
     ban(detail) {
-      detail.isForbidden = true
+      detail.isForbidden = 1
       banEmployee(detail).then(response => {
         this.fetchData()
       })

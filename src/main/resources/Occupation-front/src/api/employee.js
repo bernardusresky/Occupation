@@ -47,3 +47,31 @@ export function report(email) {
     method: 'put'
   })
 }
+export function getInteractionList() {
+  return request({
+    url: '/interaction/list',
+    method: 'get'
+  })
+}
+
+export function accept(interId, isAccept) {
+  return request({
+    url: '/interaction/accept/' + interId + '/' + isAccept,
+    method: 'put'
+  })
+}
+
+export function apply(id, ere) {
+  return request({
+    url: '/interaction',
+    method: 'post',
+    data: {
+      interId: 0,
+      jobId: id,
+      createTime: '',
+      employeeEmail: store.getters.token,
+      employerEmail: ere,
+      checkStatus: -1
+    }
+  })
+}

@@ -89,3 +89,32 @@ export function report(email) {
     method: 'put'
   })
 }
+
+export function getInteractionList() {
+  return request({
+    url: '/interaction/list',
+    method: 'get'
+  })
+}
+
+export function accept(interId, isAccept) {
+  return request({
+    url: '/interaction/accept/' + interId + '/' + isAccept,
+    method: 'put'
+  })
+}
+
+export function offer(id, eee) {
+  return request({
+    url: '/interaction',
+    method: 'post',
+    data: {
+      interId: 0,
+      jobId: id,
+      createTime: '',
+      employeeEmail: eee,
+      employerEmail: store.getters.token,
+      checkStatus: 1
+    }
+  })
+}

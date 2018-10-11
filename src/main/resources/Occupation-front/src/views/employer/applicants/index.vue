@@ -78,7 +78,7 @@
         <el-button
           size="mini"
           type="success"
-          @click="offer()">offer</el-button>
+          @click="dialogFormVisible1 = true, choseEe = scope.row.email">offer</el-button>
         <el-button
           size="mini"
           type="danger"
@@ -134,11 +134,25 @@
             </el-form-item>
         </el-form>
     </el-dialog>
+
+     <el-dialog title="Choose Job" :visible.sync="dialogFormVisible1">
+        <el-form >        
+
+            <el-form-item label="Job Id" :label-width="formLabelWidth">
+            <el-input-number v-model="choseJobId" ></el-input-number>
+            </el-form-item>
+
+            <el-form-item :label-width="formLabelWidth">
+              <el-button type="primary" @click="handleOffer()">Send</el-button>
+            </el-form-item>
+            
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { getApplicants, report } from '@/api/employer'
+import { getApplicants, report, offer } from '@/api/employer'
 
 export default {
   data() {
@@ -161,7 +175,9 @@ export default {
         expectCity: '',
         address: '',
         description: ''
-      }
+      },
+      choseJobId: '',
+      choseEe: ''
     }
   },
   created() {
@@ -196,8 +212,11 @@ export default {
         this.fetchData()
       })
     },
-    offer() {
-
+    handleOffer() {
+      offer(this.choseJobId, this.choseEe).then(response => {
+        this.dialogFormVisible1 = false
+        this.fetchData()
+      })
     }
   }
 }

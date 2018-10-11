@@ -3,146 +3,56 @@
     <el-input placeholder="Search" v-model="filterText" style="margin-bottom:30px;"></el-input>
     <el-table :data="filteredList" v-loading="listLoading" element-loading-text="Loading" border fit highlight-current-row>
 
-      <el-table-column align="center" label='Email' width="110" prop="Email">
+      <el-table-column label="InteractionId" width="150" align="center" prop="interactionId" sortable>
         <template slot-scope="scope">
-          {{scope.row.email}}
+          {{scope.row.interId}}
         </template>
       </el-table-column>
 
-      <el-table-column label="Name" width="90" align="center" prop="Name" sortable>
+      <el-table-column label="JobId" width="90" align="center" prop="jobId" sortable>
         <template slot-scope="scope">
-          {{scope.row.name}}
+          {{scope.row.jobId}}
         </template>
       </el-table-column>
 
-      <el-table-column label="Phone" width="110" prop="Phone">
+      <el-table-column label="Employer Email" prop="employerEmail" sortable>
         <template slot-scope="scope">
-          {{scope.row.phone}}
+          {{scope.row.employerEmail}}
         </template>
       </el-table-column>
 
-       <el-table-column label="Birthday" width="120" prop="Birthday" sortable>
+
+       <el-table-column label="Create Time" width="180" prop="createTime" sortable>
         <template slot-scope="scope">
           <i class="el-icon-time"></i>
-          <span>{{scope.row.birthday}}</span>
+          <span>{{scope.row.createTime}}</span>
         </template>
       </el-table-column>
 
-       <el-table-column label="Gender" width="100" prop="Gender" sortable>
+      <el-table-column label="Status" width="170" align="center" sortable>
         <template slot-scope="scope">
-          {{scope.row.gender}}
-        </template>
-      </el-table-column>
-
-      <el-table-column label="Edu Background" width="170" align="center" sortable>
-        <template slot-scope="scope">
-          {{scope.row.edu_background}}
-        </template>
-      </el-table-column>
-
-      <el-table-column label="Work Experience" width="170" align="center" sortable>
-        <template slot-scope="scope">
-          {{scope.row.work_experience}}
-        </template>
-      </el-table-column>
-
-       <el-table-column label="Expect Salary" width="80" align="center">
-        <template slot-scope="scope">
-          {{scope.row.expect_salary}}
-        </template>
-      </el-table-column>
-
-       <el-table-column label="Expect City" width="80" align="center">
-        <template slot-scope="scope">
-          {{scope.row.expect_city}}
-        </template>
-      </el-table-column>
-
-      <el-table-column label="Address">
-        <template slot-scope="scope">
-          {{scope.row.address}}
-        </template>
-      </el-table-column>
-
-      <el-table-column label="Description">
-        <template slot-scope="scope">
-          {{scope.row.description}}
+          <el-tag :type="scope.row.checkStatus | statusFilter">{{interactionStatus(scope.row.checkStatus)}}</el-tag>
         </template>
       </el-table-column>
 
        <el-table-column label="Operation" width="320" align="center">
         <template slot-scope="scope">
-        <el-button
-          size="mini"
-          @click="dialogFormVisible = true, detail = scope.row">detail</el-button>
-        <el-button
+        <el-button v-if="scope.row.checkStatus === 1"
           size="mini"
           type="success"
-          @click="accept()">accept</el-button>
-        <el-button
+          @click="handAccept(scope.row.interId,1)">accept</el-button>
+        <el-button v-if="scope.row.checkStatus === 1"
           size="mini"
           type="danger"
-          @click="reject()">reject</el-button>
-        <el-button
-          size="mini"
-          type="danger"
-          @click="ban()">ban</el-button>
+          @click="handAccept(scope.row.interId,0)">reject</el-button>
       </template>
       </el-table-column>
     </el-table>
-
-    <el-dialog title="Employee Detail" :visible.sync="dialogFormVisible">
-        <el-form :model="detail">
-            <el-form-item label="Email" :label-width="formLabelWidth">
-            <el-input v-model="detail.email" ></el-input>
-            </el-form-item>
-
-            <el-form-item label="Name" :label-width="formLabelWidth">
-            <el-input v-model="detail.name"></el-input>
-            </el-form-item>
-
-            <el-form-item label="Phone" :label-width="formLabelWidth">
-            <el-input v-model="detail.phone" ></el-input>
-            </el-form-item>
-
-             <el-form-item label="Birthday" :label-width="formLabelWidth">
-            <el-date-picker type="date" v-model="detail.birthday" ></el-date-picker>
-            </el-form-item>
-
-             <el-form-item label="Gender" :label-width="formLabelWidth">
-            <el-input v-model="detail.gender" ></el-input>
-            </el-form-item>
-
-            <el-form-item label="Edu Background" :label-width="formLabelWidth">
-            <el-input v-model="detail.edu_background" ></el-input>
-            </el-form-item>
-
-            <el-form-item label="Work Experience" :label-width="formLabelWidth">
-            <el-input v-model="detail.work_experience" ></el-input>
-            </el-form-item>
-
-            <el-form-item label="Expect Salary" :label-width="formLabelWidth">
-            <el-input v-model="detail.expect_salary" ></el-input>
-            </el-form-item>
-
-            <el-form-item label="Expect City" :label-width="formLabelWidth">
-            <el-input v-model="detail.expect_city" ></el-input>
-            </el-form-item>
-
-           <el-form-item label="Address" :label-width="formLabelWidth">
-            <el-input type="textarea" v-model="detail.address" ></el-input>
-            </el-form-item>
-
-            <el-form-item label="Description" :label-width="formLabelWidth">
-            <el-input type="textarea" v-model="detail.description" ></el-input>
-            </el-form-item>
-        </el-form>
-    </el-dialog>
   </div>
 </template>
 
 <script>
-import { getApplicants } from '@/api/employer'
+import { getInteractionList, accept } from '@/api/employee'
 
 export default {
   data() {
@@ -152,22 +62,18 @@ export default {
       listLoading: true,
       dialogFormVisible: false,
       dialogFormVisible1: false,
-      formLabelWidth: '160px',
-      detail: {
-        email: '',
-        name: '',
-        phone: '',
-        birthday: '',
-        gender: '',
-        edu_background: '',
-        work_experience: '',
-        expect_salary: '',
-        expect_city: '',
-        address: '',
-        description: ''
-        // job: {
-        // }
+      formLabelWidth: '160px'
+    }
+  },
+  filters: {
+    statusFilter(status) {
+      const statusMap = {
+        1: 'info',
+        2: 'danger',
+        3: 'success'
       }
+      if (status < 0) return statusMap[-status]
+      return statusMap[status]
     }
   },
   created() {
@@ -192,16 +98,30 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      getApplicants().then(response => {
+      getInteractionList().then(response => {
         this.list = response.data
         this.listLoading = false
       })
     },
-    report() {
-
+    handAccept(interId, isAccept) {
+      accept(interId, isAccept).then(response => {
+        this.fetchData()
+      })
     },
-    sendOffer() {
-
+    interactionStatus(status) {
+      if (status === -1) {
+        return 'waiting'
+      } else if (status === -2) {
+        return 'disagreed'
+      } else if (status === -3) {
+        return 'agreed'
+      } else if (status === 1) {
+        return 'waiting'
+      } else if (status === 2) {
+        return 'rejected'
+      } else {
+        return 'accepted'
+      }
     }
   }
 }
