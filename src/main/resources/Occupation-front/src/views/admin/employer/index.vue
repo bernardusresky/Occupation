@@ -68,7 +68,7 @@
       </template>
       </el-table-column>
     </el-table>
-    <el-dialog title="Employee Detail" :visible.sync="dialogFormVisible">
+    <el-dialog title="Employer Detail" :visible.sync="dialogFormVisible">
         <el-form :model="detail">
             <el-form-item label="Email" :label-width="formLabelWidth">
             <el-input v-model="detail.email" ></el-input>
