@@ -16,13 +16,10 @@ import java.util.Properties;
 public class EmailUtil {
     public static final String PROTOCOL = "smtp";
     public static final int PORT = 25;
-//    public static final String HOST = "smtp.139.com";
-//    public static final String FROM = "18260032917@139.com";\
-//    public static final String PWD = "jinhongluo@cs";
-    public static final String HOST="mail.sjtu.edu.cn";
-    public static final String FROM="optimusprime1997@sjtu.edu.cn" ;
-    public static final String PWD="jie!18780107043";
 
+    public static final String HOST="yourhost";
+    public static final String FROM="youremailaddress" ;
+    public static final String PWD="yourpassword";
     /**
      *\
      *
