@@ -47,31 +47,6 @@ public class EmailUtil {
     }
 
     public static String getCurrentHostName() {
-//        Enumeration<NetworkInterface> allNetInterfaces = null;
-//        try {
-//            allNetInterfaces = NetworkInterface.getNetworkInterfaces();
-//        } catch (SocketException e) {
-//            e.printStackTrace();
-//        }
-//        String host = "localhost";
-//        InetAddress ip = null;
-//        while (allNetInterfaces.hasMoreElements()) {
-//            NetworkInterface netInterface = (NetworkInterface) allNetInterfaces.nextElement();
-//            log.debug("netInterface name is {}", netInterface.getName());
-//            if (netInterface.getDisplayName().equals("lo0")) {
-//                continue;
-//            }
-//            Enumeration addresses = netInterface.getInetAddresses();
-//            while (addresses.hasMoreElements()) {
-//                ip = (InetAddress) addresses.nextElement();
-//                if (ip != null && ip instanceof Inet4Address) {
-//                    log.info("本机的IP=" + ip.getHostAddress());
-//                    host = ip.getHostAddress();
-//                    return host;
-//                }
-//            }
-//        }
-//        log.error("get ip address failed,host:" + host);
         return Const.LOCAL_IP;
     }
 
