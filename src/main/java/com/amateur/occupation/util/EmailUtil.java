@@ -20,7 +20,6 @@ public class EmailUtil {
     public static final String HOST="yourhost";
     public static final String FROM="youremailaddress" ;
     public static final String PWD="yourpassword";
-
     /**
      *\
      *
