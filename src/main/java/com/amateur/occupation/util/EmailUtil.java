@@ -44,7 +44,7 @@ public class EmailUtil {
 
         return session;
     }
-
+    //get current host name
     public static String getCurrentHostName() {
         return Const.LOCAL_IP;
     }
