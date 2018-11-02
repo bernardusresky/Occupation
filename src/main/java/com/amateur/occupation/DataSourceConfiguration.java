@@ -12,7 +12,10 @@ import javax.sql.DataSource;
 
 @Slf4j
 @Configuration
+//@PropertySource("classpath:application.properties")
+
 public class DataSourceConfiguration {
+
     @Value("${occupation.runtime}")
     private boolean runtime;
 
@@ -28,6 +31,7 @@ public class DataSourceConfiguration {
         String classPath = DataSourceConfiguration.class.getResource("/").toString();
         log.info("class .getResource:" + classPath);
 //        deploy this path will be wrong
+        
         String relativePath = DataSourceConfiguration.class.getResource("/").getPath();
         String finalPath = null;
         int beginIndex = 1;

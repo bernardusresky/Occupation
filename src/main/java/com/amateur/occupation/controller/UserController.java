@@ -11,11 +11,13 @@ import com.amateur.occupation.util.EmailUtil;
 import com.amateur.occupation.util.Enycryption;
 import com.amateur.occupation.util.TResult;
 import com.amateur.occupation.util.TResultCode;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Map;
 
 
@@ -43,10 +45,15 @@ public class UserController {
         String password = (String) map.get("password");
         TResult result = userService.login(email, password);
         if (result.getCode() == TResultCode.SUCCESS.getCode()) {
-            log.info("set session attribute id:" + result.getMessage());
-            session.setAttribute(Const.ID_KEY, result.getMessage());
+            log.info("set session attribute id:" + result.getMessage() + " user:" + result.getData());
             User user = (User) result.getData();
-            session.setAttribute(Const.USER_TYPE_KEY, user.getUserType());
+            if (user.getIsForbidden() == 1) {
+                return TResult.failure(TResultCode.PERMISSION_NO_ACCESS);
+            } else {
+                session.setAttribute(Const.ID_KEY, result.getMessage());
+                session.setAttribute(Const.USER_TYPE_KEY, user.getUserType());
+
+            }
         }
         return result;
     }
@@ -67,34 +74,57 @@ public class UserController {
         return result;
     }
 
-    @GetMapping("/add")
-    public TResult add(@RequestParam("data") String data) {
-        return null;
+
+    @GetMapping("/employee_list")
+    public TResult employeeList() {
+        if ((int) session.getAttribute(Const.USER_TYPE_KEY) == 0 || (int) session.getAttribute(Const.USER_TYPE_KEY) == 1) {
+            List<Employee> employeeList = employeeService.list();
+            if (employeeList == null) {
+                return TResult.failure(TResultCode.BUSINESS_ERROR);
+            } else {
+                return TResult.success(employeeList);
+            }
+        } else {
+            return TResult.failure(TResultCode.PERMISSION_NO_ACCESS);
+        }
+
+    }
+
+    @GetMapping("/employer_list")
+    public TResult employerList() {
+        if ((int) session.getAttribute(Const.USER_TYPE_KEY) == 0) {
+            List<Employer> employerList = employerService.list();
+            if (employerList == null) {
+                return TResult.failure(TResultCode.BUSINESS_ERROR);
+            } else {
+                return TResult.success(employerList);
+            }
+        } else {
+            return TResult.failure(TResultCode.PERMISSION_NO_ACCESS);
+        }
+
     }
 
 
     @GetMapping
-//    public TResult get(@RequestParam("email") String email, @RequestParam("userType") int userType) {
     public TResult get() {
         String email = (String) session.getAttribute(Const.ID_KEY);
         if (session.getAttribute(Const.USER_TYPE_KEY) == null) {
             return TResult.failure(TResultCode.USER_NOT_LOGGED_IN);
         }
         int userType = (Integer) session.getAttribute(Const.USER_TYPE_KEY);
-        TResult result = TResult.failure(TResultCode.BUSINESS_ERROR);
+        TResult result = TResult.success();
         switch (userType) {
             case 0:
                 result = TResult.success(new User(email, "******", userType));
                 break;
             case 1:
-                result = employerService.get(email);
-                Employer employer = (Employer) result.getData();
+                Employer employer = employerService.getEmployer(email);
                 employer.setUserType(userType);
                 result.setData(employer);
                 break;
             case 2:
-                result = employeeService.get(email);
-                Employee employee = (Employee) result.getData();
+                Employee employee = employeeService.getEmployee(email);
                 employee.setUserType(userType);
                 result.setData(employee);
                 break;
@@ -102,6 +132,34 @@ public class UserController {
                 return TResult.failure(TResultCode.BUSINESS_ERROR);
         }
         return result;
+    }
+
+    /**
+     * to be tested
+     *
+     * @param email
+     * @return
+     */
+    @PutMapping("/report/{email}")
+    public TResult report(@PathVariable("email") String email) {
+        EntityWrapper<User> ew = new EntityWrapper<>();
+        boolean result = userService.updateForSet("  reported_num=reported_num+1 ", ew.eq("email", email));
+        if (result) {
+            return TResult.success("update user add reportNum 1 ");
+        } else {
+            return TResult.failure(TResultCode.BUSINESS_ERROR);
+        }
+    }
+
+    @PutMapping("/forbidden/{email}/{isForbidden}")
+    public TResult forbidden(@PathVariable("email") String email, @PathVariable("isForbidden") int isForbidden) {
+        EntityWrapper<User> ew = new EntityWrapper<>();
+        boolean result = userService.updateForSet("  is_forbidden=" + isForbidden, ew.eq("email", email));
+        if (result) {
+            return TResult.success("update user isForbidden to " + isForbidden);
+        } else {
+            return TResult.failure(TResultCode.BUSINESS_ERROR);
+        }
     }
 
     @PostMapping("/logout")
