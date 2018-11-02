@@ -44,7 +44,7 @@ export default {
   }
 }
 </script>
-
+//style
 <style rel="stylesheet/scss" lang="scss" scoped>
   @import "src/styles/mixin.scss";
   .app-wrapper {
